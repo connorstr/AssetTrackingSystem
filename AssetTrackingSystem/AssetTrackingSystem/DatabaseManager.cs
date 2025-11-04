@@ -1,31 +1,37 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AssetTrackingSystem
 {
+    // Connects the app to database and handles adding assets to it
     public class DatabaseManager
     {
         private string connectionString;
 
+        // sets up the database connection string details
         public DatabaseManager()
         {
             connectionString = "server=lochnagar.abertay.ac.uk;user=sql2308259;password=already-patrol-finish-fight;database=sql2308259";
         }
 
+        // returns a new MYSQL connection object
         public MySqlConnection GetConnection()
         {
             return new MySqlConnection(connectionString);
         }
 
+        // adds a new record to the database
         public void AddAsset(Asset asset)
         {
             using var conn = GetConnection();
             conn.Open();
 
+            // SQL command to insert correct values into table
             string sql = "INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note)";
 
             using MySqlCommand cmd = new MySqlCommand(sql, conn);

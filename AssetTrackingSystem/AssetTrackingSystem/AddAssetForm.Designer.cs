@@ -43,6 +43,7 @@
             txtNote = new TextBox();
             btnAddAsset = new Button();
             btnClear = new Button();
+            btnViewAssets = new Button();
             SuspendLayout();
             // 
             // label1
@@ -182,11 +183,22 @@
             btnClear.Text = "Clear Form";
             btnClear.UseVisualStyleBackColor = true;
             // 
+            // btnViewAssets
+            // 
+            btnViewAssets.Location = new Point(47, 15);
+            btnViewAssets.Name = "btnViewAssets";
+            btnViewAssets.Size = new Size(93, 23);
+            btnViewAssets.TabIndex = 15;
+            btnViewAssets.Text = "View Assets";
+            btnViewAssets.UseVisualStyleBackColor = true;
+            btnViewAssets.Click += this.btnViewAssets_Click;
+            // 
             // AddAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnViewAssets);
             Controls.Add(btnClear);
             Controls.Add(btnAddAsset);
             Controls.Add(txtNote);
@@ -225,5 +237,6 @@
         private TextBox txtNote;
         private Button btnAddAsset;
         private Button btnClear;
+        private Button btnViewAssets;
     }
 }

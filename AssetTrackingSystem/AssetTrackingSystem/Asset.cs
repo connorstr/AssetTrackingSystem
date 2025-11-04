@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AssetTrackingSystem
 {
+    // corrolates asset with properties relating to the columns in the tbale
     public class Asset
     {
         public int AssetID {  get; set; }
@@ -16,6 +17,6 @@ namespace AssetTrackingSystem
         public DateTime PurchaseDate { get; set; }
         public string Note { get; set; }
 
-        public Asset() { }
+        public Asset() { } // default constructer
     }
 }

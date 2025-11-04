@@ -9,7 +9,7 @@ namespace AssetTrackingSystem
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-
+            // attempts to connect to database, throws error if unsuccessful
             try
             {
                 DatabaseManager db = new();
@@ -23,7 +23,7 @@ namespace AssetTrackingSystem
                 return;
             }
 
-            Application.Run(new AddAssetForm());
+            Application.Run(new AddAssetForm()); // starts the main add asset form
         }
     }
 }

@@ -7,10 +7,12 @@ namespace AssetTrackingSystem
             InitializeComponent();
         }
 
+        // event handler for the add asset button press
         private void btnAddAsset_Click(object sender, EventArgs e)
         {
             try
             {
+                // takes user input and creates new asset for table
                 Asset newAsset = new Asset
                 {
                     Name = txtName.Text,
@@ -22,7 +24,7 @@ namespace AssetTrackingSystem
                 };
 
                 DatabaseManager db = new DatabaseManager();
-                db.AddAsset(newAsset);
+                db.AddAsset(newAsset); // adding asset to table
 
                 MessageBox.Show("Asset added successfully!");
             }
@@ -31,5 +33,14 @@ namespace AssetTrackingSystem
                 MessageBox.Show("Error adding asset: " + ex.Message);
             }
         }
+
+        // event handler for the button to swap to the view asset form
+        private void btnViewAssets_Click(object sender, EventArgs e)
+        {
+            ViewAssetsForm viewForm = new ViewAssetsForm();
+            viewForm.ShowDialog();
+        }
+
+
     }
 }
