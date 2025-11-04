@@ -17,11 +17,5 @@ namespace AssetTrackingSystem
         public string Note { get; set; }
 
         public Asset() { }
-
-        public int generateID()
-        {
-            Random rnd = new Random();
-            return rnd.Next(1,9999);
-        }
     }
 }

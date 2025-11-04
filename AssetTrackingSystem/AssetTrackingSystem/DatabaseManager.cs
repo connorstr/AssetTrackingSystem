@@ -26,10 +26,9 @@ namespace AssetTrackingSystem
             using var conn = GetConnection();
             conn.Open();
 
-            string sql = "INSERT INTO assets (AssetID, Name, Model, Manufacturer, Type, PurchaseDate, Note) VALUES (@AssetID, @Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note)";
+            string sql = "INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note)";
 
             using MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@AssetID", asset.AssetID);
             cmd.Parameters.AddWithValue("@Name", asset.Name);
             cmd.Parameters.AddWithValue("@Model", asset.Model);
             cmd.Parameters.AddWithValue("@Manufacturer", asset.Manufacturer);
