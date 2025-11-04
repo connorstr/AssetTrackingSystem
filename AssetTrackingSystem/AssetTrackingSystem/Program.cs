@@ -8,9 +8,21 @@ namespace AssetTrackingSystem
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
+            try
+            {
+                DatabaseManager db = new();
+                using var conn = db.GetConnection();
+                conn.Open();
+                MessageBox.Show("Connection successful");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection failed: " + ex.Message);
+                return;
+            }
+
             Application.Run(new Form1());
         }
     }
