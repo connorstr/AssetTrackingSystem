@@ -20,5 +20,23 @@ namespace AssetTrackingSystem
         {
             return new MySqlConnection(connectionString);
         }
+
+        public void AddAsset(Asset asset)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = "INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note)";
+
+            using MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Name", asset.Name);
+            cmd.Parameters.AddWithValue("@Model", asset.Model);
+            cmd.Parameters.AddWithValue("@Manufacturer", asset.Manufacturer);
+            cmd.Parameters.AddWithValue("@Type", asset.Type);
+            cmd.Parameters.AddWithValue("@PurchaseDate", asset.PurchaseDate);
+            cmd.Parameters.AddWithValue("@Note", asset.Note);
+            cmd.ExecuteNonQuery();
+
+        }
     }
 }
