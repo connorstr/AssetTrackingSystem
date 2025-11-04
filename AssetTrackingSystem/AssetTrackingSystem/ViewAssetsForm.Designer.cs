@@ -30,13 +30,14 @@
         {
             listViewAssets = new ListView();
             lblAllAssets = new Label();
+            btnEditAsset = new Button();
             SuspendLayout();
             // 
             // listViewAssets
             // 
             listViewAssets.Location = new Point(0, 48);
             listViewAssets.Name = "listViewAssets";
-            listViewAssets.Size = new Size(800, 406);
+            listViewAssets.Size = new Size(800, 348);
             listViewAssets.TabIndex = 0;
             listViewAssets.UseCompatibleStateImageBehavior = false;
             listViewAssets.View = View.Details;
@@ -52,11 +53,23 @@
             lblAllAssets.Text = "All Assets";
             lblAllAssets.TextAlign = ContentAlignment.TopCenter;
             // 
+            // btnEditAsset
+            // 
+            btnEditAsset.Font = new Font("Segoe UI", 15F);
+            btnEditAsset.Location = new Point(342, 402);
+            btnEditAsset.Name = "btnEditAsset";
+            btnEditAsset.Size = new Size(134, 38);
+            btnEditAsset.TabIndex = 2;
+            btnEditAsset.Text = "Edit Asset";
+            btnEditAsset.UseVisualStyleBackColor = true;
+            btnEditAsset.Click += btnEditAsset_Click;
+            // 
             // ViewAssetsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnEditAsset);
             Controls.Add(lblAllAssets);
             Controls.Add(listViewAssets);
             Name = "ViewAssetsForm";
@@ -68,5 +81,6 @@
 
         private ListView listViewAssets;
         private Label lblAllAssets;
+        private Button btnEditAsset;
     }
 }

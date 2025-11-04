@@ -44,5 +44,32 @@ namespace AssetTrackingSystem
             cmd.ExecuteNonQuery();
 
         }
+
+        public void UpdateAsset(Asset asset)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"UPDATE assets 
+                   SET Name = @Name, 
+                       Model = @Model, 
+                       Manufacturer = @Manufacturer, 
+                       Type = @Type, 
+                       PurchaseDate = @PurchaseDate, 
+                       Note = @Note 
+                   WHERE AssetID = @AssetID";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Name", asset.Name);
+            cmd.Parameters.AddWithValue("@Model", asset.Model);
+            cmd.Parameters.AddWithValue("@Manufacturer", asset.Manufacturer);
+            cmd.Parameters.AddWithValue("@Type", asset.Type);
+            cmd.Parameters.AddWithValue("@PurchaseDate", asset.PurchaseDate);
+            cmd.Parameters.AddWithValue("@Note", asset.Note);
+            cmd.Parameters.AddWithValue("@AssetID", asset.AssetID);
+
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }

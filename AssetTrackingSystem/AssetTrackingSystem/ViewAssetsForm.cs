@@ -77,5 +77,48 @@ namespace AssetTrackingSystem
                 MessageBox.Show("Error loading assets: " + ex.Message);
             }
         }
+
+        private void btnEditAsset_Click(object sender, EventArgs e)
+        {
+            if (listViewAssets.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select an asset to edit.");
+                return;
+            }
+
+            // Get selected asset ID from database
+            int assetId = int.Parse(listViewAssets.SelectedItems[0].SubItems[0].Text);
+
+            // Fetch asset details from the database
+            Asset assetToEdit = null;
+            using var conn = db.GetConnection();
+            conn.Open();
+            string sql = "SELECT * FROM assets WHERE AssetID = @AssetID";
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@AssetID", assetId);
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                assetToEdit = new Asset
+                {
+                    AssetID = assetId,
+                    Name = reader["Name"].ToString(),
+                    Model = reader["Model"].ToString(),
+                    Manufacturer = reader["Manufacturer"].ToString(),
+                    Type = reader["Type"].ToString(),
+                    PurchaseDate = Convert.ToDateTime(reader["PurchaseDate"]),
+                    Note = reader["Note"].ToString()
+                };
+            }
+
+            if (assetToEdit != null)
+            {
+                EditAssetForm editForm = new EditAssetForm(assetToEdit);
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadAssets(); // Refresh the list after editing
+                }
+            }
+        }
     }
 }

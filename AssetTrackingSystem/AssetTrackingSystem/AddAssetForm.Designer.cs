@@ -191,7 +191,7 @@
             btnViewAssets.TabIndex = 15;
             btnViewAssets.Text = "View Assets";
             btnViewAssets.UseVisualStyleBackColor = true;
-            btnViewAssets.Click += this.btnViewAssets_Click;
+            btnViewAssets.Click += btnViewAssets_Click;
             // 
             // AddAssetForm
             // 
