@@ -13,6 +13,7 @@ namespace AssetTrackingSystem
             {
                 Asset newAsset = new Asset
                 {
+                    AssetID = new Asset().generateID(),
                     Name = txtName.Text,
                     Model = txtModel.Text,
                     Manufacturer = txtManufacturer.Text,
