@@ -45,11 +45,6 @@ namespace AssetTrackingSystem
                 MessageBox.Show("Error updating employee: " + ex.Message);
             }
         }
-
-        private void btnSave_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }
 
