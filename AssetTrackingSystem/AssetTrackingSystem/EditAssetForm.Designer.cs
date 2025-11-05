@@ -42,11 +42,13 @@
             label1 = new Label();
             btnSave = new Button();
             lblEditAsset = new Label();
+            cmbEmployee = new ComboBox();
+            lblAssignedEmployee = new Label();
             SuspendLayout();
             // 
             // txtNote
             // 
-            txtNote.Location = new Point(373, 295);
+            txtNote.Location = new Point(373, 294);
             txtNote.Multiline = true;
             txtNote.Name = "txtNote";
             txtNote.Size = new Size(200, 60);
@@ -54,7 +56,7 @@
             // 
             // dtpPurchaseDate
             // 
-            dtpPurchaseDate.Location = new Point(373, 253);
+            dtpPurchaseDate.Location = new Point(373, 215);
             dtpPurchaseDate.Name = "dtpPurchaseDate";
             dtpPurchaseDate.Size = new Size(200, 23);
             dtpPurchaseDate.TabIndex = 23;
@@ -63,28 +65,28 @@
             // 
             txtType.FormattingEnabled = true;
             txtType.Items.AddRange(new object[] { "Laptop", "Desktop", "Printer", "Server", "Phone" });
-            txtType.Location = new Point(373, 217);
+            txtType.Location = new Point(373, 179);
             txtType.Name = "txtType";
             txtType.Size = new Size(200, 23);
             txtType.TabIndex = 22;
             // 
             // txtManufacturer
             // 
-            txtManufacturer.Location = new Point(373, 178);
+            txtManufacturer.Location = new Point(373, 140);
             txtManufacturer.Name = "txtManufacturer";
             txtManufacturer.Size = new Size(200, 23);
             txtManufacturer.TabIndex = 21;
             // 
             // txtModel
             // 
-            txtModel.Location = new Point(373, 139);
+            txtModel.Location = new Point(373, 101);
             txtModel.Name = "txtModel";
             txtModel.Size = new Size(200, 23);
             txtModel.TabIndex = 20;
             // 
             // txtName
             // 
-            txtName.Location = new Point(373, 100);
+            txtName.Location = new Point(373, 62);
             txtName.Name = "txtName";
             txtName.Size = new Size(200, 23);
             txtName.TabIndex = 19;
@@ -93,7 +95,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 15F);
-            label7.Location = new Point(299, 290);
+            label7.Location = new Point(299, 289);
             label7.Name = "label7";
             label7.Size = new Size(68, 28);
             label7.TabIndex = 18;
@@ -103,7 +105,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 15F);
-            label6.Location = new Point(228, 251);
+            label6.Location = new Point(228, 213);
             label6.Name = "label6";
             label6.Size = new Size(139, 28);
             label6.TabIndex = 17;
@@ -113,7 +115,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 15F);
-            label5.Location = new Point(310, 212);
+            label5.Location = new Point(310, 174);
             label5.Name = "label5";
             label5.Size = new Size(57, 28);
             label5.TabIndex = 16;
@@ -123,7 +125,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 15F);
-            label4.Location = new Point(234, 173);
+            label4.Location = new Point(234, 135);
             label4.Name = "label4";
             label4.Size = new Size(133, 28);
             label4.TabIndex = 15;
@@ -133,7 +135,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 15F);
-            label3.Location = new Point(294, 134);
+            label3.Location = new Point(294, 96);
             label3.Name = "label3";
             label3.Size = new Size(73, 28);
             label3.TabIndex = 14;
@@ -143,7 +145,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(248, 95);
+            label1.Location = new Point(248, 57);
             label1.Name = "label1";
             label1.Size = new Size(119, 28);
             label1.TabIndex = 13;
@@ -171,11 +173,33 @@
             lblEditAsset.Text = "EditAsset";
             lblEditAsset.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // cmbEmployee
+            // 
+            cmbEmployee.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbEmployee.FormattingEnabled = true;
+            cmbEmployee.Items.AddRange(new object[] { "Laptop", "Desktop", "Printer", "Server", "Phone" });
+            cmbEmployee.Location = new Point(373, 259);
+            cmbEmployee.Name = "cmbEmployee";
+            cmbEmployee.Size = new Size(200, 23);
+            cmbEmployee.TabIndex = 27;
+            // 
+            // lblAssignedEmployee
+            // 
+            lblAssignedEmployee.AutoSize = true;
+            lblAssignedEmployee.Font = new Font("Segoe UI", 15F);
+            lblAssignedEmployee.Location = new Point(181, 254);
+            lblAssignedEmployee.Name = "lblAssignedEmployee";
+            lblAssignedEmployee.Size = new Size(186, 28);
+            lblAssignedEmployee.TabIndex = 28;
+            lblAssignedEmployee.Text = "Assigned Employee:";
+            // 
             // EditAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblAssignedEmployee);
+            Controls.Add(cmbEmployee);
             Controls.Add(lblEditAsset);
             Controls.Add(btnSave);
             Controls.Add(txtNote);
@@ -212,5 +236,7 @@
         private Label label1;
         private Button btnSave;
         private Label lblEditAsset;
+        private ComboBox cmbEmployee;
+        private Label lblAssignedEmployee;
     }
 }
