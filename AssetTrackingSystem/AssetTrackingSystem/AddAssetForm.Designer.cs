@@ -45,6 +45,8 @@
             btnClear = new Button();
             btnViewAssets = new Button();
             btnManageEmployees = new Button();
+            lblAssignedEmployee = new Label();
+            cmbEmployee = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -72,7 +74,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 15F);
-            label3.Location = new Point(314, 99);
+            label3.Location = new Point(314, 100);
             label3.Name = "label3";
             label3.Size = new Size(73, 28);
             label3.TabIndex = 2;
@@ -82,7 +84,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 15F);
-            label4.Location = new Point(254, 138);
+            label4.Location = new Point(254, 140);
             label4.Name = "label4";
             label4.Size = new Size(133, 28);
             label4.TabIndex = 3;
@@ -92,7 +94,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 15F);
-            label5.Location = new Point(330, 177);
+            label5.Location = new Point(330, 180);
             label5.Name = "label5";
             label5.Size = new Size(57, 28);
             label5.TabIndex = 4;
@@ -102,7 +104,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 15F);
-            label6.Location = new Point(248, 216);
+            label6.Location = new Point(248, 220);
             label6.Name = "label6";
             label6.Size = new Size(139, 28);
             label6.TabIndex = 5;
@@ -112,7 +114,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 15F);
-            label7.Location = new Point(319, 255);
+            label7.Location = new Point(319, 300);
             label7.Name = "label7";
             label7.Size = new Size(68, 28);
             label7.TabIndex = 6;
@@ -120,21 +122,21 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(393, 65);
+            txtName.Location = new Point(393, 68);
             txtName.Name = "txtName";
             txtName.Size = new Size(200, 23);
             txtName.TabIndex = 7;
             // 
             // txtModel
             // 
-            txtModel.Location = new Point(393, 104);
+            txtModel.Location = new Point(393, 108);
             txtModel.Name = "txtModel";
             txtModel.Size = new Size(200, 23);
             txtModel.TabIndex = 8;
             // 
             // txtManufacturer
             // 
-            txtManufacturer.Location = new Point(393, 143);
+            txtManufacturer.Location = new Point(393, 148);
             txtManufacturer.Name = "txtManufacturer";
             txtManufacturer.Size = new Size(200, 23);
             txtManufacturer.TabIndex = 9;
@@ -143,21 +145,21 @@
             // 
             txtType.FormattingEnabled = true;
             txtType.Items.AddRange(new object[] { "Laptop", "Desktop", "Printer", "Server", "Phone" });
-            txtType.Location = new Point(393, 182);
+            txtType.Location = new Point(393, 188);
             txtType.Name = "txtType";
             txtType.Size = new Size(200, 23);
             txtType.TabIndex = 10;
             // 
             // dtpPurchaseDate
             // 
-            dtpPurchaseDate.Location = new Point(393, 218);
+            dtpPurchaseDate.Location = new Point(393, 225);
             dtpPurchaseDate.Name = "dtpPurchaseDate";
             dtpPurchaseDate.Size = new Size(200, 23);
             dtpPurchaseDate.TabIndex = 11;
             // 
             // txtNote
             // 
-            txtNote.Location = new Point(393, 260);
+            txtNote.Location = new Point(393, 305);
             txtNote.Multiline = true;
             txtNote.Name = "txtNote";
             txtNote.Size = new Size(200, 60);
@@ -166,7 +168,7 @@
             // btnAddAsset
             // 
             btnAddAsset.Font = new Font("Segoe UI", 12F);
-            btnAddAsset.Location = new Point(426, 344);
+            btnAddAsset.Location = new Point(426, 389);
             btnAddAsset.Name = "btnAddAsset";
             btnAddAsset.Size = new Size(124, 36);
             btnAddAsset.TabIndex = 13;
@@ -177,7 +179,7 @@
             // btnClear
             // 
             btnClear.Font = new Font("Segoe UI", 12F);
-            btnClear.Location = new Point(263, 344);
+            btnClear.Location = new Point(263, 389);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(124, 36);
             btnClear.TabIndex = 14;
@@ -206,11 +208,32 @@
             btnManageEmployees.UseVisualStyleBackColor = true;
             btnManageEmployees.Click += btnManageEmployees_Click;
             // 
+            // lblAssignedEmployee
+            // 
+            lblAssignedEmployee.AutoSize = true;
+            lblAssignedEmployee.Font = new Font("Segoe UI", 15F);
+            lblAssignedEmployee.Location = new Point(201, 260);
+            lblAssignedEmployee.Name = "lblAssignedEmployee";
+            lblAssignedEmployee.Size = new Size(186, 28);
+            lblAssignedEmployee.TabIndex = 17;
+            lblAssignedEmployee.Text = "Assigned Employee:";
+            // 
+            // cmbEmployee
+            // 
+            cmbEmployee.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbEmployee.FormattingEnabled = true;
+            cmbEmployee.Location = new Point(393, 268);
+            cmbEmployee.Name = "cmbEmployee";
+            cmbEmployee.Size = new Size(200, 23);
+            cmbEmployee.TabIndex = 18;
+            // 
             // AddAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(cmbEmployee);
+            Controls.Add(lblAssignedEmployee);
             Controls.Add(btnManageEmployees);
             Controls.Add(btnViewAssets);
             Controls.Add(btnClear);
@@ -253,5 +276,7 @@
         private Button btnClear;
         private Button btnViewAssets;
         private Button btnManageEmployees;
+        private Label lblAssignedEmployee;
+        private ComboBox cmbEmployee;
     }
 }

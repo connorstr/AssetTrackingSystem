@@ -32,7 +32,7 @@ namespace AssetTrackingSystem
             conn.Open();
 
             // SQL command to insert correct values into table
-            string sql = "INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note)";
+            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note, EmployeeID) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note, @EmployeeID)";
 
             using MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@Name", asset.Name);
@@ -41,9 +41,10 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@Type", asset.Type);
             cmd.Parameters.AddWithValue("@PurchaseDate", asset.PurchaseDate);
             cmd.Parameters.AddWithValue("@Note", asset.Note);
+            cmd.Parameters.AddWithValue("@EmployeeID", asset.EmployeeID ?? (object)DBNull.Value);
             cmd.ExecuteNonQuery();
-
         }
+
         // updates the existing record with new one input by user
         public void UpdateAsset(Asset asset)
         {
@@ -56,7 +57,8 @@ namespace AssetTrackingSystem
                        Manufacturer = @Manufacturer, 
                        Type = @Type, 
                        PurchaseDate = @PurchaseDate, 
-                       Note = @Note 
+                       Note = @Note,
+                       EmployeeID = @EmployeeID
                    WHERE AssetID = @AssetID";
 
             using var cmd = new MySqlCommand(sql, conn);
@@ -66,6 +68,7 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@Type", asset.Type);
             cmd.Parameters.AddWithValue("@PurchaseDate", asset.PurchaseDate);
             cmd.Parameters.AddWithValue("@Note", asset.Note);
+            cmd.Parameters.AddWithValue("@EmployeeID", asset.EmployeeID ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@AssetID", asset.AssetID);
 
             cmd.ExecuteNonQuery();
@@ -96,7 +99,24 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
             cmd.Parameters.AddWithValue("@LastName", employee.LastName);
             cmd.Parameters.AddWithValue("@Email", employee.Email);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateEmployee(Employee employee)
+        {
+            using var conn = GetConnection();
+            conn.Open();
 
+            string sql = @"UPDATE employees 
+                   SET FirstName = @FirstName, 
+                       LastName = @LastName, 
+                       Email = @Email 
+                   WHERE EmployeeID = @EmployeeID";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", employee.LastName);
+            cmd.Parameters.AddWithValue("@Email", employee.Email);
+            cmd.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
             cmd.ExecuteNonQuery();
         }
 
@@ -123,7 +143,6 @@ namespace AssetTrackingSystem
 
             DataTable dt = new DataTable();
             adapter.Fill(dt);
-
             return dt;
         }
 

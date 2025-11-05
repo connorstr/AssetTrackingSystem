@@ -88,6 +88,7 @@ namespace AssetTrackingSystem
 
         private void btnDeleteEmployee_Click(object sender, EventArgs e)
         {
+            // checks if user has selected an employee to delete yet
             if (listViewEmployees.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Please select an employee to delete");
@@ -114,6 +115,43 @@ namespace AssetTrackingSystem
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error deleting employee: " + ex.Message);
+                }
+            }
+        }
+        private void btnEditEmployee_Click(object sender, EventArgs e)
+        {
+            if (listViewEmployees.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select an employee to edit.");
+                return;
+            }
+            int employeeId = int.Parse(listViewEmployees.SelectedItems[0].SubItems[0].Text);
+            Employee employeeToEdit = null;
+
+            using var conn = db.GetConnection();
+            conn.Open();
+            string sql = "SELECT * FROM employees WHERE EmployeeID = @EmployeeID";
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeId);
+            using var reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                employeeToEdit = new Employee
+                {
+                    EmployeeID = employeeId,
+                    FirstName = reader["FirstName"].ToString(),
+                    LastName = reader["LastName"].ToString(),
+                    Email = reader["Email"].ToString()
+                };
+            }
+
+            if (employeeToEdit != null)
+            {
+                EditEmployeeForm editForm = new EditEmployeeForm(employeeToEdit);
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadEmployees();
                 }
             }
         }
