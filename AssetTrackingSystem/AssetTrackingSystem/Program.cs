@@ -15,7 +15,6 @@ namespace AssetTrackingSystem
                 DatabaseManager db = new();
                 using var conn = db.GetConnection();
                 conn.Open();
-                MessageBox.Show("Connection successful");
             }
             catch (Exception ex)
             {
