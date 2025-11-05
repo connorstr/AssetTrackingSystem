@@ -1,0 +1,90 @@
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace AssetTrackingSystem
+{
+    public partial class EmployeeManagementForm : Form
+    {
+        private DatabaseManager db;
+
+        public EmployeeManagementForm()
+        {
+            InitializeComponent();
+            db = new DatabaseManager();
+            SetupListView();
+            LoadEmployees();
+        }
+
+        private void SetupListView()
+        {
+            listViewEmployees.View = View.Details;
+            listViewEmployees.FullRowSelect = true;
+            listViewEmployees.GridLines = true;
+
+            listViewEmployees.Columns.Add("ID", 50);
+            listViewEmployees.Columns.Add("First Name", 100);
+            listViewEmployees.Columns.Add("Last Name", 100);
+            listViewEmployees.Columns.Add("Email", 150);
+        }
+        // loads the listview of employees when form is open
+        private void LoadEmployees()
+        {
+            listViewEmployees.Items.Clear();
+
+            try
+            {
+                string sql = "SELECT EmployeeID, FirstName, LastName, Email FROM employees";
+                DataTable dt = db.ExecuteSelect(sql);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    var item = new ListViewItem(row["EmployeeID"].ToString());
+                    item.SubItems.Add(row["FirstName"].ToString());
+                    item.SubItems.Add(row["LastName"].ToString());
+                    item.SubItems.Add(row["Email"].ToString());
+                    listViewEmployees.Items.Add(item);
+                }
+
+                // Auto resize columns
+                foreach (ColumnHeader col in listViewEmployees.Columns)
+                    col.Width = -2;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading employees: " + ex.Message);
+            }
+        }
+
+
+        // click event for adding new employee to database
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Employee newEmp = new Employee
+                {
+                    FirstName = txtFirstName.Text,
+                    LastName = txtLastName.Text,
+                    Email = txtEmail.Text
+                };
+
+                db.AddEmployee(newEmp);
+                MessageBox.Show("Employee added successfully!");
+                LoadEmployees();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding employee: " + ex.Message);
+            }
+        }
+
+    }
+}

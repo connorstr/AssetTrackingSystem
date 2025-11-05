@@ -41,6 +41,11 @@ namespace AssetTrackingSystem
             viewForm.ShowDialog();
         }
 
+        private void btnManageEmployees_Click(object sender, EventArgs e)
+        {
+            EmployeeManagementForm employeeForm = new EmployeeManagementForm();
+            employeeForm.ShowDialog(); // opens the employee management window
+        }
 
     }
 }

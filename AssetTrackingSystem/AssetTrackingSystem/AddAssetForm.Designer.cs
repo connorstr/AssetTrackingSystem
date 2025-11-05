@@ -44,6 +44,7 @@
             btnAddAsset = new Button();
             btnClear = new Button();
             btnViewAssets = new Button();
+            btnManageEmployees = new Button();
             SuspendLayout();
             // 
             // label1
@@ -164,8 +165,8 @@
             // 
             // btnAddAsset
             // 
-            btnAddAsset.Font = new Font("Segoe UI", 15F);
-            btnAddAsset.Location = new Point(411, 344);
+            btnAddAsset.Font = new Font("Segoe UI", 12F);
+            btnAddAsset.Location = new Point(426, 344);
             btnAddAsset.Name = "btnAddAsset";
             btnAddAsset.Size = new Size(124, 36);
             btnAddAsset.TabIndex = 13;
@@ -175,8 +176,8 @@
             // 
             // btnClear
             // 
-            btnClear.Font = new Font("Segoe UI", 15F);
-            btnClear.Location = new Point(254, 344);
+            btnClear.Font = new Font("Segoe UI", 12F);
+            btnClear.Location = new Point(263, 344);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(124, 36);
             btnClear.TabIndex = 14;
@@ -185,19 +186,32 @@
             // 
             // btnViewAssets
             // 
-            btnViewAssets.Location = new Point(47, 15);
+            btnViewAssets.Font = new Font("Segoe UI", 12F);
+            btnViewAssets.Location = new Point(12, 12);
             btnViewAssets.Name = "btnViewAssets";
-            btnViewAssets.Size = new Size(93, 23);
+            btnViewAssets.Size = new Size(157, 47);
             btnViewAssets.TabIndex = 15;
             btnViewAssets.Text = "View Assets";
             btnViewAssets.UseVisualStyleBackColor = true;
             btnViewAssets.Click += btnViewAssets_Click;
+            // 
+            // btnManageEmployees
+            // 
+            btnManageEmployees.Font = new Font("Segoe UI", 12F);
+            btnManageEmployees.Location = new Point(631, 12);
+            btnManageEmployees.Name = "btnManageEmployees";
+            btnManageEmployees.Size = new Size(157, 47);
+            btnManageEmployees.TabIndex = 16;
+            btnManageEmployees.Text = "Manage Employees";
+            btnManageEmployees.UseVisualStyleBackColor = true;
+            btnManageEmployees.Click += btnManageEmployees_Click;
             // 
             // AddAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnManageEmployees);
             Controls.Add(btnViewAssets);
             Controls.Add(btnClear);
             Controls.Add(btnAddAsset);
@@ -238,5 +252,6 @@
         private Button btnAddAsset;
         private Button btnClear;
         private Button btnViewAssets;
+        private Button btnManageEmployees;
     }
 }

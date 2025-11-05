@@ -44,7 +44,7 @@ namespace AssetTrackingSystem
             cmd.ExecuteNonQuery();
 
         }
-
+        // updates the existing record with new one input by user
         public void UpdateAsset(Asset asset)
         {
             using var conn = GetConnection();
@@ -69,6 +69,38 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@AssetID", asset.AssetID);
 
             cmd.ExecuteNonQuery();
+        }
+
+
+
+        public void AddEmployee(Employee employee)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            // SQL command to insert correct values into employees table
+            string sql = "INSERT INTO employees (FirstName, LastName, Email) VALUES (@FirstName, @LastName, @Email)";
+
+            using MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", employee.LastName);
+            cmd.Parameters.AddWithValue("@Email", employee.Email);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public DataTable ExecuteSelect(string sql)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            using var cmd = new MySqlCommand(sql, conn);
+            using var adapter = new MySqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            return dt;
         }
 
     }
