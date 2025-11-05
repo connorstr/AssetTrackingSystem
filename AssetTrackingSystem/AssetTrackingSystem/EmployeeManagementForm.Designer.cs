@@ -37,13 +37,14 @@
             lblFirstName = new Label();
             lblLastName = new Label();
             lblEmail = new Label();
+            btnDeleteEmployee = new Button();
             SuspendLayout();
             // 
             // listViewEmployees
             // 
             listViewEmployees.Location = new Point(385, 63);
             listViewEmployees.Name = "listViewEmployees";
-            listViewEmployees.Size = new Size(403, 375);
+            listViewEmployees.Size = new Size(403, 315);
             listViewEmployees.TabIndex = 0;
             listViewEmployees.UseCompatibleStateImageBehavior = false;
             // 
@@ -120,11 +121,23 @@
             lblEmail.TabIndex = 8;
             lblEmail.Text = "Email:";
             // 
+            // btnDeleteEmployee
+            // 
+            btnDeleteEmployee.Font = new Font("Segoe UI", 12F);
+            btnDeleteEmployee.Location = new Point(623, 406);
+            btnDeleteEmployee.Name = "btnDeleteEmployee";
+            btnDeleteEmployee.Size = new Size(150, 32);
+            btnDeleteEmployee.TabIndex = 9;
+            btnDeleteEmployee.Text = "Delete Employee";
+            btnDeleteEmployee.UseVisualStyleBackColor = true;
+            btnDeleteEmployee.Click += btnDeleteEmployee_Click;
+            // 
             // EmployeeManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnDeleteEmployee);
             Controls.Add(lblEmail);
             Controls.Add(lblLastName);
             Controls.Add(lblFirstName);
@@ -151,5 +164,6 @@
         private Label lblFirstName;
         private Label lblLastName;
         private Label lblEmail;
+        private Button btnDeleteEmployee;
     }
 }

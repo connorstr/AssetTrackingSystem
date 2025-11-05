@@ -44,39 +44,33 @@ namespace AssetTrackingSystem
         {
             listViewAssets.Items.Clear();
 
-            using var conn = db.GetConnection();
             try
             {
-                conn.Open();
                 string sql = "SELECT AssetID, Name, Model, Manufacturer, Type, PurchaseDate, Note FROM assets";
-                using var cmd = new MySqlCommand(sql, conn);
-                using var reader = cmd.ExecuteReader();
+                DataTable dt = db.ExecuteSelect(sql);
 
-                while (reader.Read())
+                foreach (DataRow row in dt.Rows)
                 {
-                    // Creates an Item for each asset
-                    ListViewItem item = new ListViewItem(reader["AssetID"].ToString());
-                    item.SubItems.Add(reader["Name"].ToString());
-                    item.SubItems.Add(reader["Model"].ToString());
-                    item.SubItems.Add(reader["Manufacturer"].ToString());
-                    item.SubItems.Add(reader["Type"].ToString());
-                    item.SubItems.Add(Convert.ToDateTime(reader["PurchaseDate"]).ToShortDateString());
-                    item.SubItems.Add(reader["Note"].ToString());
-
+                    var item = new ListViewItem(row["AssetID"].ToString());
+                    item.SubItems.Add(row["Name"].ToString());
+                    item.SubItems.Add(row["Model"].ToString());
+                    item.SubItems.Add(row["Manufacturer"].ToString());
+                    item.SubItems.Add(row["Type"].ToString());
+                    item.SubItems.Add(Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString());
+                    item.SubItems.Add(row["Note"].ToString());
                     listViewAssets.Items.Add(item);
                 }
 
-                // Auto sizes the columns to fit different sizes
-                for (int i = 0; i < listViewAssets.Columns.Count; i++)
-                {
-                    listViewAssets.Columns[i].Width = -2;
-                }
+                // Auto-size columns
+                foreach (ColumnHeader col in listViewAssets.Columns)
+                    col.Width = -2;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading assets: " + ex.Message);
             }
         }
+
 
         private void btnEditAsset_Click(object sender, EventArgs e)
         {
@@ -120,5 +114,40 @@ namespace AssetTrackingSystem
                 }
             }
         }
+
+        private void btnDeleteAsset_Click(object sender, EventArgs e)
+        {
+            if (listViewAssets.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select an asset to delete.");
+                return;
+            }
+
+            // Get the selected AssetID
+            int assetId = int.Parse(listViewAssets.SelectedItems[0].SubItems[0].Text);
+
+            // Ask for confirmation
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this asset?",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    db.DeleteAsset(assetId);
+                    MessageBox.Show("Asset deleted successfully!");
+                    LoadAssets(); // Refresh the list
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting asset: " + ex.Message);
+                }
+            }
+        }
+
     }
 }

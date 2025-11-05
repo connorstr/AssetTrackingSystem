@@ -86,5 +86,36 @@ namespace AssetTrackingSystem
             }
         }
 
+        private void btnDeleteEmployee_Click(object sender, EventArgs e)
+        {
+            if (listViewEmployees.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select an employee to delete");
+                return;
+            }
+
+            int employeeId = int.Parse(listViewEmployees.SelectedItems[0].SubItems[0].Text);
+
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this employee?",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    db.DeleteEmployee(employeeId);
+                    MessageBox.Show("Employee deleted successfully!");
+                    LoadEmployees(); // refresh list with record now deleted
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting employee: " + ex.Message);
+                }
+            }
+        }
     }
 }

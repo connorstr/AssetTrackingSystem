@@ -71,6 +71,17 @@ namespace AssetTrackingSystem
             cmd.ExecuteNonQuery();
         }
 
+        public void DeleteAsset(int assetId)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = "DELETE FROM assets WHERE AssetID = @AssetID";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@AssetID", assetId);
+            cmd.ExecuteNonQuery();
+        }
 
 
         public void AddEmployee(Employee employee)
@@ -89,6 +100,19 @@ namespace AssetTrackingSystem
             cmd.ExecuteNonQuery();
         }
 
+        public void DeleteEmployee(int employeeId)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = "DELETE FROM employees WHERE EmployeeID = @EmployeeID";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeId);
+            cmd.ExecuteNonQuery();
+        }
+
+
         public DataTable ExecuteSelect(string sql)
         {
             using var conn = GetConnection();
@@ -102,6 +126,7 @@ namespace AssetTrackingSystem
 
             return dt;
         }
+
 
     }
 }

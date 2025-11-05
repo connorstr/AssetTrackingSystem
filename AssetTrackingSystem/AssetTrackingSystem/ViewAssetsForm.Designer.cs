@@ -31,6 +31,7 @@
             listViewAssets = new ListView();
             lblAllAssets = new Label();
             btnEditAsset = new Button();
+            btnDeleteAsset = new Button();
             SuspendLayout();
             // 
             // listViewAssets
@@ -56,7 +57,7 @@
             // btnEditAsset
             // 
             btnEditAsset.Font = new Font("Segoe UI", 15F);
-            btnEditAsset.Location = new Point(342, 402);
+            btnEditAsset.Location = new Point(244, 402);
             btnEditAsset.Name = "btnEditAsset";
             btnEditAsset.Size = new Size(134, 38);
             btnEditAsset.TabIndex = 2;
@@ -64,11 +65,23 @@
             btnEditAsset.UseVisualStyleBackColor = true;
             btnEditAsset.Click += btnEditAsset_Click;
             // 
+            // btnDeleteAsset
+            // 
+            btnDeleteAsset.Font = new Font("Segoe UI", 15F);
+            btnDeleteAsset.Location = new Point(448, 402);
+            btnDeleteAsset.Name = "btnDeleteAsset";
+            btnDeleteAsset.Size = new Size(134, 38);
+            btnDeleteAsset.TabIndex = 3;
+            btnDeleteAsset.Text = "Delete Asset";
+            btnDeleteAsset.UseVisualStyleBackColor = true;
+            btnDeleteAsset.Click += btnDeleteAsset_Click;
+            // 
             // ViewAssetsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnDeleteAsset);
             Controls.Add(btnEditAsset);
             Controls.Add(lblAllAssets);
             Controls.Add(listViewAssets);
@@ -82,5 +95,6 @@
         private ListView listViewAssets;
         private Label lblAllAssets;
         private Button btnEditAsset;
+        private Button btnDeleteAsset;
     }
 }
