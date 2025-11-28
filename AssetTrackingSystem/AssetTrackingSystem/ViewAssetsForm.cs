@@ -35,8 +35,8 @@ namespace AssetTrackingSystem
             listViewAssets.Columns.Add("Model", 50);
             listViewAssets.Columns.Add("Manufacturer", 50);
             listViewAssets.Columns.Add("Type", 50);
-            listViewAssets.Columns.Add("Purchase Date", 50);
             listViewAssets.Columns.Add("IP Address", 50);
+            listViewAssets.Columns.Add("Purchase Date", 50);
             listViewAssets.Columns.Add("Note", 100);
         }
 
@@ -47,7 +47,7 @@ namespace AssetTrackingSystem
 
             try
             {
-                string sql = "SELECT AssetID, Name, Model, Manufacturer, Type, PurchaseDate, Note FROM assets";
+                string sql = "SELECT AssetID, Name, Model, Manufacturer, Type, IPAddress,  PurchaseDate, Note FROM assets";
                 DataTable dt = db.ExecuteSelect(sql);
 
                 foreach (DataRow row in dt.Rows)
@@ -56,9 +56,9 @@ namespace AssetTrackingSystem
                     item.SubItems.Add(row["Name"].ToString());
                     item.SubItems.Add(row["Model"].ToString());
                     item.SubItems.Add(row["Manufacturer"].ToString());
-                    item.SubItems.Add(row["Type"].ToString());
-                    item.SubItems.Add(Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString());
+                    item.SubItems.Add(row["Type"].ToString()); 
                     item.SubItems.Add(row["IPAddress"].ToString());
+                    item.SubItems.Add(Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString());
                     item.SubItems.Add(row["Note"].ToString());
                     listViewAssets.Items.Add(item);
                 }
