@@ -12,6 +12,7 @@ namespace AssetTrackingSystem
         private void AddAssetForm_Load(object sender, EventArgs e)
         {
             LoadEmployees();
+            AutoFillHardwareInfo();
         }
         private void LoadEmployees()
         {
@@ -83,5 +84,15 @@ namespace AssetTrackingSystem
             employeeForm.ShowDialog(); 
         }
 
+        private void AutoFillHardwareInfo()
+        {
+            var hw = SystemInfoHelper.GetHardwareInfo();
+
+            txtName.Text = hw.SystemName;
+            txtModel.Text = hw.Model;
+            txtManufacturer.Text = hw.Manufacturer;
+            txtType.Text = hw.Type;
+            txtIPAddress.Text = hw.IPAddress;
+        }
     }
 }

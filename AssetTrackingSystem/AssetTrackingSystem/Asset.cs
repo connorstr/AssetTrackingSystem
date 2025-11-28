@@ -17,6 +17,7 @@ namespace AssetTrackingSystem
         public DateTime PurchaseDate { get; set; }
         public string Note { get; set; }
         public int? EmployeeID { get; set; }
+        public string IPAddress { get; set; }
 
         public Asset() { } // default constructer
     }
