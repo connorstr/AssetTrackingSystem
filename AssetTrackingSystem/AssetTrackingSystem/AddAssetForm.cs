@@ -57,6 +57,7 @@ namespace AssetTrackingSystem
                     Type = txtType.Text,
                     PurchaseDate = dtpPurchaseDate.Value,
                     Note = txtNote.Text,
+                    IPAddress = txtIPAddress.Text,
                     EmployeeID = cmbEmployee.SelectedValue != null ? (int)cmbEmployee.SelectedValue : (int?)null
                 };
 

@@ -32,7 +32,7 @@ namespace AssetTrackingSystem
             conn.Open();
 
             // SQL command to insert correct values into table
-            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note, EmployeeID) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note, @EmployeeID)";
+            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note, EmployeeID, IPAddress) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note, @EmployeeID, @IPAddress)";
 
             using MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@Name", asset.Name);
@@ -42,6 +42,7 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@PurchaseDate", asset.PurchaseDate);
             cmd.Parameters.AddWithValue("@Note", asset.Note);
             cmd.Parameters.AddWithValue("@EmployeeID", asset.EmployeeID ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@IPAddress", asset.IPAddress);
             cmd.ExecuteNonQuery();
         }
 
@@ -59,6 +60,7 @@ namespace AssetTrackingSystem
                        PurchaseDate = @PurchaseDate, 
                        Note = @Note,
                        EmployeeID = @EmployeeID
+                       IPAddress = @IPAddress
                    WHERE AssetID = @AssetID";
 
             using var cmd = new MySqlCommand(sql, conn);
@@ -69,6 +71,7 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@PurchaseDate", asset.PurchaseDate);
             cmd.Parameters.AddWithValue("@Note", asset.Note);
             cmd.Parameters.AddWithValue("@EmployeeID", asset.EmployeeID ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@IPAddress", asset.IPAddress);
             cmd.Parameters.AddWithValue("@AssetID", asset.AssetID);
 
             cmd.ExecuteNonQuery();

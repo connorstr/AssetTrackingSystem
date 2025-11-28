@@ -47,6 +47,8 @@
             btnManageEmployees = new Button();
             lblAssignedEmployee = new Label();
             cmbEmployee = new ComboBox();
+            txtIPAddress = new TextBox();
+            label8 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -114,7 +116,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 15F);
-            label7.Location = new Point(319, 300);
+            label7.Location = new Point(319, 330);
             label7.Name = "label7";
             label7.Size = new Size(68, 28);
             label7.TabIndex = 6;
@@ -159,10 +161,10 @@
             // 
             // txtNote
             // 
-            txtNote.Location = new Point(393, 305);
+            txtNote.Location = new Point(393, 335);
             txtNote.Multiline = true;
             txtNote.Name = "txtNote";
-            txtNote.Size = new Size(200, 60);
+            txtNote.Size = new Size(200, 37);
             txtNote.TabIndex = 12;
             // 
             // btnAddAsset
@@ -212,7 +214,7 @@
             // 
             lblAssignedEmployee.AutoSize = true;
             lblAssignedEmployee.Font = new Font("Segoe UI", 15F);
-            lblAssignedEmployee.Location = new Point(201, 260);
+            lblAssignedEmployee.Location = new Point(201, 290);
             lblAssignedEmployee.Name = "lblAssignedEmployee";
             lblAssignedEmployee.Size = new Size(186, 28);
             lblAssignedEmployee.TabIndex = 17;
@@ -222,16 +224,35 @@
             // 
             cmbEmployee.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEmployee.FormattingEnabled = true;
-            cmbEmployee.Location = new Point(393, 268);
+            cmbEmployee.Location = new Point(393, 298);
             cmbEmployee.Name = "cmbEmployee";
             cmbEmployee.Size = new Size(200, 23);
             cmbEmployee.TabIndex = 18;
+            // 
+            // txtIPAddress
+            // 
+            txtIPAddress.Location = new Point(393, 262);
+            txtIPAddress.Name = "txtIPAddress";
+            txtIPAddress.Size = new Size(200, 23);
+            txtIPAddress.TabIndex = 19;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 15F);
+            label8.Location = new Point(280, 257);
+            label8.Name = "label8";
+            label8.Size = new Size(107, 28);
+            label8.TabIndex = 20;
+            label8.Text = "IP Address:";
             // 
             // AddAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label8);
+            Controls.Add(txtIPAddress);
             Controls.Add(cmbEmployee);
             Controls.Add(lblAssignedEmployee);
             Controls.Add(btnManageEmployees);
@@ -278,5 +299,7 @@
         private Button btnManageEmployees;
         private Label lblAssignedEmployee;
         private ComboBox cmbEmployee;
+        private TextBox txtIPAddress;
+        private Label label8;
     }
 }

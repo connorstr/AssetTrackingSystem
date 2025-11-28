@@ -29,6 +29,7 @@ namespace AssetTrackingSystem
             txtType.Text = asset.Type;
             dtpPurchaseDate.Value = asset.PurchaseDate;
             txtNote.Text = asset.Note;
+            txtIPAddress.Text = asset.IPAddress;
             LoadEmployees(asset.EmployeeID);
         }
         //loads the employees into combo box
@@ -83,6 +84,7 @@ namespace AssetTrackingSystem
                 asset.Type = txtType.Text;
                 asset.PurchaseDate = dtpPurchaseDate.Value;
                 asset.Note = txtNote.Text;
+                asset.IPAddress = txtIPAddress.Text;
                 asset.EmployeeID = cmbEmployee.SelectedValue != null ? (int)cmbEmployee.SelectedValue : (int?)null;
 
                 // Save changes to the database

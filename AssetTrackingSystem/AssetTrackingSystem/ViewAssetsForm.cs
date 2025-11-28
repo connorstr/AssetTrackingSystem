@@ -36,6 +36,7 @@ namespace AssetTrackingSystem
             listViewAssets.Columns.Add("Manufacturer", 50);
             listViewAssets.Columns.Add("Type", 50);
             listViewAssets.Columns.Add("Purchase Date", 50);
+            listViewAssets.Columns.Add("IP Address", 50);
             listViewAssets.Columns.Add("Note", 100);
         }
 
@@ -57,6 +58,7 @@ namespace AssetTrackingSystem
                     item.SubItems.Add(row["Manufacturer"].ToString());
                     item.SubItems.Add(row["Type"].ToString());
                     item.SubItems.Add(Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString());
+                    item.SubItems.Add(row["IPAddress"].ToString());
                     item.SubItems.Add(row["Note"].ToString());
                     listViewAssets.Items.Add(item);
                 }

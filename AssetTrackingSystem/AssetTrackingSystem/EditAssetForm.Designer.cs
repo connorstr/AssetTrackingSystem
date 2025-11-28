@@ -44,14 +44,16 @@
             lblEditAsset = new Label();
             cmbEmployee = new ComboBox();
             lblAssignedEmployee = new Label();
+            label8 = new Label();
+            txtIPAddress = new TextBox();
             SuspendLayout();
             // 
             // txtNote
             // 
-            txtNote.Location = new Point(373, 294);
+            txtNote.Location = new Point(373, 313);
             txtNote.Multiline = true;
             txtNote.Name = "txtNote";
-            txtNote.Size = new Size(200, 60);
+            txtNote.Size = new Size(200, 49);
             txtNote.TabIndex = 24;
             // 
             // dtpPurchaseDate
@@ -95,7 +97,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 15F);
-            label7.Location = new Point(299, 289);
+            label7.Location = new Point(299, 308);
             label7.Name = "label7";
             label7.Size = new Size(68, 28);
             label7.TabIndex = 18;
@@ -154,7 +156,7 @@
             // btnSave
             // 
             btnSave.Font = new Font("Segoe UI", 15F);
-            btnSave.Location = new Point(393, 376);
+            btnSave.Location = new Point(441, 394);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(132, 44);
             btnSave.TabIndex = 25;
@@ -178,7 +180,7 @@
             cmbEmployee.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEmployee.FormattingEnabled = true;
             cmbEmployee.Items.AddRange(new object[] { "Laptop", "Desktop", "Printer", "Server", "Phone" });
-            cmbEmployee.Location = new Point(373, 259);
+            cmbEmployee.Location = new Point(373, 278);
             cmbEmployee.Name = "cmbEmployee";
             cmbEmployee.Size = new Size(200, 23);
             cmbEmployee.TabIndex = 27;
@@ -187,17 +189,36 @@
             // 
             lblAssignedEmployee.AutoSize = true;
             lblAssignedEmployee.Font = new Font("Segoe UI", 15F);
-            lblAssignedEmployee.Location = new Point(181, 254);
+            lblAssignedEmployee.Location = new Point(181, 273);
             lblAssignedEmployee.Name = "lblAssignedEmployee";
             lblAssignedEmployee.Size = new Size(186, 28);
             lblAssignedEmployee.TabIndex = 28;
             lblAssignedEmployee.Text = "Assigned Employee:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 15F);
+            label8.Location = new Point(260, 244);
+            label8.Name = "label8";
+            label8.Size = new Size(107, 28);
+            label8.TabIndex = 30;
+            label8.Text = "IP Address:";
+            // 
+            // txtIPAddress
+            // 
+            txtIPAddress.Location = new Point(373, 249);
+            txtIPAddress.Name = "txtIPAddress";
+            txtIPAddress.Size = new Size(200, 23);
+            txtIPAddress.TabIndex = 29;
             // 
             // EditAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label8);
+            Controls.Add(txtIPAddress);
             Controls.Add(lblAssignedEmployee);
             Controls.Add(cmbEmployee);
             Controls.Add(lblEditAsset);
@@ -238,5 +259,7 @@
         private Label lblEditAsset;
         private ComboBox cmbEmployee;
         private Label lblAssignedEmployee;
+        private Label label8;
+        private TextBox txtIPAddress;
     }
 }
