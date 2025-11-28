@@ -52,5 +52,20 @@ namespace AssetTrackingSystem
                 return "Unknown";
             }
         }
+
+        public static string GetOSName()
+        {
+            return RuntimeInformation.OSDescription;
+        }
+
+        public static string GetOSVersion()
+        {
+            return Environment.OSVersion.Version.ToString();
+        }
+
+        public static string GetOSManufacturer()
+        {
+            return "Microsoft";
+        }
     }
 }
