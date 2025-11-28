@@ -12,14 +12,31 @@ namespace AssetTrackingSystem
             // attempts to connect to database, throws error if unsuccessful
             try
             {
-                DatabaseManager db = new();
-                using var conn = db.GetConnection();
-                conn.Open();
+                DatabaseManager dbTest = new();
+                using var testConn = dbTest.GetConnection();
+                testConn.Open();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Connection failed: " + ex.Message);
                 return;
+            }
+
+            // auto detects current machine and trys to add it to database
+            try
+            {
+                DatabaseManager db = new();
+                var hw = SystemInfoHelper.GetHardwareInfo();
+
+                if (!db.HardwareExists(hw.SystemName))
+                {
+                    db.AddHardwareAsset(hw, null);
+                    MessageBox.Show("This device has been automatically added to the asset database.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Auto-add failed: " + ex.Message);
             }
 
             Application.Run(new AddAssetForm()); // starts the main add asset form

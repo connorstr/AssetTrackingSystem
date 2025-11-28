@@ -25,6 +25,41 @@ namespace AssetTrackingSystem
             return new MySqlConnection(connectionString);
         }
 
+        public bool HardwareExists(string systemName)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = "SELECT COUNT(*) FROM assets WHERE Name = @Name AND Type = 'Hardware'";
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Name", systemName);
+
+            long count = (long)cmd.ExecuteScalar();
+            return count > 0;
+        }
+
+        public void AddHardwareAsset(HardwareInfo hw, int? employeeId = null)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, IPAddress, PurchaseDate, Note, EmployeeID)
+                   VALUES (@Name, @Model, @Manufacturer, @Type, @IPAddress, @PurchaseDate, @Note, @EmployeeID)";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Name", hw.SystemName);
+            cmd.Parameters.AddWithValue("@Model", hw.Model);
+            cmd.Parameters.AddWithValue("@Manufacturer", hw.Manufacturer);
+            cmd.Parameters.AddWithValue("@Type", hw.Type);
+            cmd.Parameters.AddWithValue("@IPAddress", hw.IPAddress);
+            cmd.Parameters.AddWithValue("@PurchaseDate", DateTime.Now);
+            cmd.Parameters.AddWithValue("@Note", "Auto-added by system scanner");
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeId ?? (object)DBNull.Value);
+
+            cmd.ExecuteNonQuery();
+        }
+
+
         // adds a new record to the database
         public void AddAsset(Asset asset)
         {
@@ -59,7 +94,7 @@ namespace AssetTrackingSystem
                        Type = @Type, 
                        PurchaseDate = @PurchaseDate, 
                        Note = @Note,
-                       EmployeeID = @EmployeeID
+                       EmployeeID = @EmployeeID,
                        IPAddress = @IPAddress
                    WHERE AssetID = @AssetID";
 

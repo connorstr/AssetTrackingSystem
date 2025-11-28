@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AssetTrackingSystem
 {
-    internal class HardwareInfo
+    public class HardwareInfo
     {        
             public string SystemName { get; set; }
             public string Model { get; set; }
