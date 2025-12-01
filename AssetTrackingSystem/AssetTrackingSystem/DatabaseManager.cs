@@ -170,7 +170,6 @@ namespace AssetTrackingSystem
             cmd.ExecuteNonQuery();
         }
 
-
         public DataTable ExecuteSelect(string sql)
         {
             using var conn = GetConnection();
@@ -184,6 +183,35 @@ namespace AssetTrackingSystem
             return dt;
         }
 
+        public Employee Authenticate(string email, string password)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string hashedPassword = PasswordHelper.HashPassword(password);
+
+            string sql = @"SELECT *
+                   FROM employees
+                   WHERE Email = @Email
+                     AND PasswordHash = @PasswordHash";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword);
+
+            using var reader = cmd.ExecuteReader();
+
+            if (!reader.Read())
+                return null;
+
+            return new Employee
+            {
+                EmployeeID = Convert.ToInt32(reader["EmployeeID"]),
+                FirstName = reader["FirstName"].ToString(),
+                LastName = reader["LastName"].ToString(),
+                Email = reader["Email"].ToString()
+            };
+        }
 
     }
 }

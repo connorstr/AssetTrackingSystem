@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlX.XDevAPI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,5 +17,27 @@ namespace AssetTrackingSystem
         {
             InitializeComponent();
         }
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            DatabaseManager db = new DatabaseManager();
+
+            Employee loggedUser = db.Authenticate(
+                txtEmail.Text,
+                txtPassword.Text
+            );
+
+            if (loggedUser == null)
+            {
+                lblError.Text = "Invalid login credentials";
+                return;
+            }
+
+            Session.CurrentUser = loggedUser;
+
+            this.Hide();
+            new AddAssetForm().ShowDialog();
+            this.Close();
+        }
+
     }
 }
