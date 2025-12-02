@@ -47,25 +47,39 @@ namespace AssetTrackingSystem
 
             try
             {
-                string sql = "SELECT AssetID, Name, Model, Manufacturer, Type, IPAddress,  PurchaseDate, Note FROM assets";
-                DataTable dt = db.ExecuteSelect(sql);
+                string sql;
 
-                foreach (DataRow row in dt.Rows)
+                if (Session.IsAdmin)
                 {
-                    var item = new ListViewItem(row["AssetID"].ToString());
-                    item.SubItems.Add(row["Name"].ToString());
-                    item.SubItems.Add(row["Model"].ToString());
-                    item.SubItems.Add(row["Manufacturer"].ToString());
-                    item.SubItems.Add(row["Type"].ToString()); 
-                    item.SubItems.Add(row["IPAddress"].ToString());
-                    item.SubItems.Add(Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString());
-                    item.SubItems.Add(row["Note"].ToString());
-                    listViewAssets.Items.Add(item);
+                    sql = "SELECT AssetID, Name, Model, Manufacturer, Type, PurchaseDate, Note, IPAddress, EmployeeID FROM assets";
+                }
+                else
+                {
+                    sql = "SELECT AssetID, Name, Model, Manufacturer, Type, PurchaseDate, Note, IPAddress, EmployeeID FROM assets WHERE EmployeeID = @EmployeeID";
                 }
 
-                // Auto-size columns
-                foreach (ColumnHeader col in listViewAssets.Columns)
-                    col.Width = -2;
+                if (Session.IsAdmin)
+                {
+                    DataTable dt = db.ExecuteSelect(sql);
+                    FillList(dt);
+                }
+                else
+                {
+                    using var conn = db.GetConnection();
+                    conn.Open();
+
+                    using var cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@EmployeeID", Session.CurrentUser.EmployeeID);
+
+                    using var adapter = new MySqlDataAdapter(cmd);
+
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    FillList(dt);
+                }
+
+                
             }
             catch (Exception ex)
             {
@@ -73,6 +87,25 @@ namespace AssetTrackingSystem
             }
         }
 
+        private void FillList(DataTable dt)
+        {
+            listViewAssets.Items.Clear();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                var item = new ListViewItem(row["AssetID"].ToString());
+                item.SubItems.Add(row["Name"].ToString());
+                item.SubItems.Add(row["Model"].ToString());
+                item.SubItems.Add(row["Manufacturer"].ToString());
+                item.SubItems.Add(row["Type"].ToString());
+                item.SubItems.Add(Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString());
+                item.SubItems.Add(row["Note"].ToString());
+                listViewAssets.Items.Add(item);
+            }
+
+            foreach (ColumnHeader col in listViewAssets.Columns)
+                col.Width = -2;
+        }
 
         private void btnEditAsset_Click(object sender, EventArgs e)
         {

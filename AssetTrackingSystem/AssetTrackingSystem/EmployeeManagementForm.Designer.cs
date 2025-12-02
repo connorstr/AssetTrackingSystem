@@ -39,6 +39,8 @@
             lblEmail = new Label();
             btnDeleteEmployee = new Button();
             btnEditEmployee = new Button();
+            label1 = new Label();
+            txtPassword = new TextBox();
             SuspendLayout();
             // 
             // listViewEmployees
@@ -73,7 +75,7 @@
             // btnAddEmployee
             // 
             btnAddEmployee.Font = new Font("Segoe UI", 12F);
-            btnAddEmployee.Location = new Point(214, 269);
+            btnAddEmployee.Location = new Point(214, 330);
             btnAddEmployee.Name = "btnAddEmployee";
             btnAddEmployee.Size = new Size(140, 34);
             btnAddEmployee.TabIndex = 4;
@@ -144,11 +146,31 @@
             btnEditEmployee.UseVisualStyleBackColor = true;
             btnEditEmployee.Click += btnEditEmployee_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15F);
+            label1.Location = new Point(53, 275);
+            label1.Name = "label1";
+            label1.Size = new Size(97, 28);
+            label1.TabIndex = 11;
+            label1.Text = "Password:";
+            // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(178, 280);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(176, 23);
+            txtPassword.TabIndex = 12;
+            txtPassword.UseSystemPasswordChar = true;
+            // 
             // EmployeeManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(txtPassword);
+            Controls.Add(label1);
             Controls.Add(btnEditEmployee);
             Controls.Add(btnDeleteEmployee);
             Controls.Add(lblEmail);
@@ -179,5 +201,7 @@
         private Label lblEmail;
         private Button btnDeleteEmployee;
         private Button btnEditEmployee;
+        private Label label1;
+        private TextBox txtPassword;
     }
 }

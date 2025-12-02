@@ -19,25 +19,39 @@ namespace AssetTrackingSystem
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            DatabaseManager db = new DatabaseManager();
+            lblError.Text = "";
 
-            Employee loggedUser = db.Authenticate(
-                txtEmail.Text,
-                txtPassword.Text
-            );
+            string email = txtEmail.Text.Trim();
+            string password = txtPassword.Text;
 
-            if (loggedUser == null)
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrEmpty(password))
             {
-                lblError.Text = "Invalid login credentials";
+                lblError.Text = "Enter email and password.";
                 return;
             }
 
-            Session.CurrentUser = loggedUser;
+            try
+            {
+                DatabaseManager db = new DatabaseManager();
+                var loggedUser = db.Authenticate(email, password);
 
-            this.Hide();
-            new AddAssetForm().ShowDialog();
-            this.Close();
+                if (loggedUser == null)
+                {
+                    lblError.Text = "Invalid email or password.";
+                    return;
+                }
+
+                Session.CurrentUser = loggedUser;
+
+                this.Hide();
+                var main = new AddAssetForm();
+                main.ShowDialog();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Login error: " + ex.Message);
+            }
         }
-
     }
 }

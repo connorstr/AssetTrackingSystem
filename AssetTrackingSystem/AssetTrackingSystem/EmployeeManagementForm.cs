@@ -69,6 +69,12 @@ namespace AssetTrackingSystem
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(txtPassword.Text))
+                {
+                    MessageBox.Show("Please enter a password for the employee.");
+                    return;
+                }
+
                 Employee newEmp = new Employee
                 {
                     FirstName = txtFirstName.Text,
@@ -76,9 +82,16 @@ namespace AssetTrackingSystem
                     Email = txtEmail.Text
                 };
 
-                db.AddEmployee(newEmp);
+                db.AddEmployee(newEmp, txtPassword.Text);
+
                 MessageBox.Show("Employee added successfully!");
                 LoadEmployees();
+
+                // Clear entry boxes
+                txtFirstName.Clear();
+                txtLastName.Clear();
+                txtEmail.Clear();
+                txtPassword.Clear();
             }
             catch (Exception ex)
             {

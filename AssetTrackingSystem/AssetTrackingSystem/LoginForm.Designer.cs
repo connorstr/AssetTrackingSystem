@@ -57,6 +57,7 @@
             btnLogin.TabIndex = 2;
             btnLogin.Text = "Log in";
             btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click;
             // 
             // lblError
             // 

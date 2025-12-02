@@ -125,20 +125,27 @@ namespace AssetTrackingSystem
         }
 
 
-        public void AddEmployee(Employee employee)
+        public void AddEmployee(Employee employee, string plainPassword)
         {
             using var conn = GetConnection();
             conn.Open();
 
-            // SQL command to insert correct values into employees table
-            string sql = "INSERT INTO employees (FirstName, LastName, Email) VALUES (@FirstName, @LastName, @Email)";
+            // hashes the password before storing it in the database
+            string hashed = PasswordHelper.HashPassword(plainPassword);
+
+            string sql = @"INSERT INTO employees (FirstName, LastName, Email, PasswordHash, Department)
+                   VALUES (@FirstName, @LastName, @Email, @PasswordHash, @Department)";
 
             using MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
             cmd.Parameters.AddWithValue("@LastName", employee.LastName);
             cmd.Parameters.AddWithValue("@Email", employee.Email);
+            cmd.Parameters.AddWithValue("@PasswordHash", hashed);
+            cmd.Parameters.AddWithValue("@Department", employee.Department ?? (object)DBNull.Value);
+
             cmd.ExecuteNonQuery();
         }
+
         public void UpdateEmployee(Employee employee)
         {
             using var conn = GetConnection();
@@ -209,9 +216,10 @@ namespace AssetTrackingSystem
                 EmployeeID = Convert.ToInt32(reader["EmployeeID"]),
                 FirstName = reader["FirstName"].ToString(),
                 LastName = reader["LastName"].ToString(),
-                Email = reader["Email"].ToString()
+                Email = reader["Email"].ToString(),
+                Department = reader["Department"]?.ToString(),
+                PasswordHash = reader["PasswordHash"]?.ToString()
             };
         }
-
     }
 }

@@ -80,8 +80,14 @@ namespace AssetTrackingSystem
         // event handler for button to open employee management form
         private void btnManageEmployees_Click(object sender, EventArgs e)
         {
-            EmployeeManagementForm employeeForm = new EmployeeManagementForm();
-            employeeForm.ShowDialog(); 
+            if (!Session.IsAdmin)
+            {
+                MessageBox.Show("Only IT staff may manage employees.");
+                return;
+            }
+
+            EmployeeManagementForm employeeForm = new();
+            employeeForm.ShowDialog();
         }
     }
 }

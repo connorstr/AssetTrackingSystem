@@ -39,7 +39,7 @@ namespace AssetTrackingSystem
                 MessageBox.Show("Auto-add failed: " + ex.Message);
             }
 
-            Application.Run(new AddAssetForm()); // starts the main add asset form
+            Application.Run(new LoginForm()); // starts the main login form
         }
     }
 }
