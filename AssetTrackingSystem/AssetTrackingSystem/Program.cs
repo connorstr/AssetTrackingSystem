@@ -1,3 +1,4 @@
+using BCrypt.Net;
 namespace AssetTrackingSystem
 {
     internal static class Program
@@ -22,6 +23,7 @@ namespace AssetTrackingSystem
                 return;
             }
 
+
             // auto detects current machine and trys to add it to database
             try
             {
@@ -38,7 +40,11 @@ namespace AssetTrackingSystem
             {
                 MessageBox.Show("Auto-add failed: " + ex.Message);
             }
+       
 
+            string hash = BCrypt.Net.BCrypt.HashPassword("Test123!");
+
+            // Application.Run(new EmployeeManagementForm());
             Application.Run(new LoginForm()); // starts the main login form
         }
     }

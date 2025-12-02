@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Org.BouncyCastle.Crypto.Generators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
+using BCrypt.Net;
 
 namespace AssetTrackingSystem
 {
@@ -11,12 +13,12 @@ namespace AssetTrackingSystem
     {
         public static string HashPassword(string password)
         {
-            using SHA256 sha = SHA256.Create();
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
 
-            byte[] bytes = Encoding.UTF8.GetBytes(password);
-            byte[] hash = sha.ComputeHash(bytes);
-
-            return Convert.ToBase64String(hash);
+        public static bool VerifyPassword(string password, string hash)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hash);
         }
     }
 }

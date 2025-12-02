@@ -129,18 +129,18 @@ namespace AssetTrackingSystem
         {
             using var conn = GetConnection();
             conn.Open();
-
             // hashes the password before storing it in the database
-            string hashed = PasswordHelper.HashPassword(plainPassword);
+            string hashedPassword = PasswordHelper.HashPassword(plainPassword);
 
-            string sql = @"INSERT INTO employees (FirstName, LastName, Email, PasswordHash, Department)
+            string sql = @"INSERT INTO employees 
+                   (FirstName, LastName, Email, PasswordHash, Department)
                    VALUES (@FirstName, @LastName, @Email, @PasswordHash, @Department)";
 
-            using MySqlCommand cmd = new MySqlCommand(sql, conn);
+            using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
             cmd.Parameters.AddWithValue("@LastName", employee.LastName);
             cmd.Parameters.AddWithValue("@Email", employee.Email);
-            cmd.Parameters.AddWithValue("@PasswordHash", hashed);
+            cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword);
             cmd.Parameters.AddWithValue("@Department", employee.Department ?? (object)DBNull.Value);
 
             cmd.ExecuteNonQuery();
@@ -195,20 +195,18 @@ namespace AssetTrackingSystem
             using var conn = GetConnection();
             conn.Open();
 
-            string hashedPassword = PasswordHelper.HashPassword(password);
-
-            string sql = @"SELECT *
-                   FROM employees
-                   WHERE Email = @Email
-                     AND PasswordHash = @PasswordHash";
-
+            string sql = @"SELECT * FROM employees WHERE Email = @Email";
             using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@Email", email);
-            cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword);
 
             using var reader = cmd.ExecuteReader();
 
             if (!reader.Read())
+                return null;
+
+            string storedHash = reader["PasswordHash"].ToString();
+
+            if (!PasswordHelper.VerifyPassword(password, storedHash))
                 return null;
 
             return new Employee
@@ -218,7 +216,7 @@ namespace AssetTrackingSystem
                 LastName = reader["LastName"].ToString(),
                 Email = reader["Email"].ToString(),
                 Department = reader["Department"]?.ToString(),
-                PasswordHash = reader["PasswordHash"]?.ToString()
+                PasswordHash = storedHash
             };
         }
     }
