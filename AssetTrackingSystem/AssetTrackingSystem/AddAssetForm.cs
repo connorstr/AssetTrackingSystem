@@ -63,7 +63,9 @@ namespace AssetTrackingSystem
                     PurchaseDate = dtpPurchaseDate.Value,
                     Note = txtNote.Text,
                     IPAddress = txtIPAddress.Text,
-                    EmployeeID = cmbEmployee.SelectedValue != null ? (int)cmbEmployee.SelectedValue : (int?)null
+                    EmployeeID = Session.IsAdmin && cmbEmployee.SelectedValue != null 
+                            ? (int)cmbEmployee.SelectedValue
+                            : Session.CurrentUser.EmployeeID
                 };
 
                 DatabaseManager db = new DatabaseManager();

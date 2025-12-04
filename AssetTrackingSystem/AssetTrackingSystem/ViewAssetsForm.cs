@@ -136,18 +136,32 @@ namespace AssetTrackingSystem
                     Manufacturer = reader["Manufacturer"].ToString(),
                     Type = reader["Type"].ToString(),
                     PurchaseDate = Convert.ToDateTime(reader["PurchaseDate"]),
-                    Note = reader["Note"].ToString()
+                    Note = reader["Note"].ToString(),
+                    IPAddress = reader["IPAddress"].ToString(),
+                    EmployeeID = reader["EmployeeID"] == DBNull.Value
+                        ? null
+                        : Convert.ToInt32(reader["EmployeeID"])
                 };
+
             }
 
             if (assetToEdit != null)
             {
+                // checks for permission check here before opening the form
+                if (!Session.IsAdmin &&
+                    assetToEdit.EmployeeID != Session.CurrentUser.EmployeeID)
+                {
+                    MessageBox.Show("You don't have permission to edit this asset.");
+                    return;
+                }
+
                 EditAssetForm editForm = new EditAssetForm(assetToEdit);
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
                     LoadAssets(); // Refresh the list after editing
                 }
             }
+
         }
 
         private void btnDeleteAsset_Click(object sender, EventArgs e)

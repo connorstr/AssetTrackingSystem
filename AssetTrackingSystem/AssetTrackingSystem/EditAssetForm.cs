@@ -30,12 +30,6 @@ namespace AssetTrackingSystem
             dtpPurchaseDate.Value = asset.PurchaseDate;
             txtNote.Text = asset.Note;
             txtIPAddress.Text = asset.IPAddress;
-            if (!Session.IsAdmin && asset.EmployeeID != Session.CurrentUser.EmployeeID)
-            {
-                MessageBox.Show("You don't have permission to edit this asset.");
-                this.Close();
-                return;
-            }
             LoadEmployees(asset.EmployeeID);
         }
         //loads the employees into combo box
@@ -91,7 +85,11 @@ namespace AssetTrackingSystem
                 asset.PurchaseDate = dtpPurchaseDate.Value;
                 asset.Note = txtNote.Text;
                 asset.IPAddress = txtIPAddress.Text;
-                asset.EmployeeID = cmbEmployee.SelectedValue != null ? (int)cmbEmployee.SelectedValue : (int?)null;
+
+                if (!Session.IsAdmin)
+                {
+                    asset.EmployeeID = Session.CurrentUser.EmployeeID;
+                }
 
                 // Save changes to the database
                 db.UpdateAsset(asset);
