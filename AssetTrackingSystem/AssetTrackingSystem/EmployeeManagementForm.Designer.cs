@@ -41,6 +41,8 @@
             btnEditEmployee = new Button();
             label1 = new Label();
             txtPassword = new TextBox();
+            cmbDepartment = new ComboBox();
+            lblDepartment = new Label();
             SuspendLayout();
             // 
             // listViewEmployees
@@ -60,14 +62,14 @@
             // 
             // txtLastName
             // 
-            txtLastName.Location = new Point(178, 155);
+            txtLastName.Location = new Point(178, 137);
             txtLastName.Name = "txtLastName";
             txtLastName.Size = new Size(176, 23);
             txtLastName.TabIndex = 2;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(178, 218);
+            txtEmail.Location = new Point(178, 177);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(176, 23);
             txtEmail.TabIndex = 3;
@@ -108,7 +110,7 @@
             // 
             lblLastName.AutoSize = true;
             lblLastName.Font = new Font("Segoe UI", 15F);
-            lblLastName.Location = new Point(40, 150);
+            lblLastName.Location = new Point(43, 129);
             lblLastName.Name = "lblLastName";
             lblLastName.Size = new Size(107, 28);
             lblLastName.TabIndex = 7;
@@ -118,7 +120,7 @@
             // 
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Segoe UI", 15F);
-            lblEmail.Location = new Point(84, 213);
+            lblEmail.Location = new Point(87, 169);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(63, 28);
             lblEmail.TabIndex = 8;
@@ -150,7 +152,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(53, 275);
+            label1.Location = new Point(53, 214);
             label1.Name = "label1";
             label1.Size = new Size(97, 28);
             label1.TabIndex = 11;
@@ -158,17 +160,38 @@
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(178, 280);
+            txtPassword.Location = new Point(178, 222);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(176, 23);
             txtPassword.TabIndex = 12;
             txtPassword.UseSystemPasswordChar = true;
+            // 
+            // cmbDepartment
+            // 
+            cmbDepartment.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbDepartment.FormattingEnabled = true;
+            cmbDepartment.Location = new Point(178, 272);
+            cmbDepartment.Name = "cmbDepartment";
+            cmbDepartment.Size = new Size(176, 23);
+            cmbDepartment.TabIndex = 13;
+            // 
+            // lblDepartment
+            // 
+            lblDepartment.AutoSize = true;
+            lblDepartment.Font = new Font("Segoe UI", 15F);
+            lblDepartment.Location = new Point(29, 267);
+            lblDepartment.Name = "lblDepartment";
+            lblDepartment.Size = new Size(121, 28);
+            lblDepartment.TabIndex = 14;
+            lblDepartment.Text = "Department:";
             // 
             // EmployeeManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblDepartment);
+            Controls.Add(cmbDepartment);
             Controls.Add(txtPassword);
             Controls.Add(label1);
             Controls.Add(btnEditEmployee);
@@ -203,5 +226,7 @@
         private Button btnEditEmployee;
         private Label label1;
         private TextBox txtPassword;
+        private ComboBox cmbDepartment;
+        private Label lblDepartment;
     }
 }

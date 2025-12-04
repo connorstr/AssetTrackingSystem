@@ -20,6 +20,7 @@ namespace AssetTrackingSystem
             InitializeComponent();
             db = new DatabaseManager();
             SetupListView();
+            LoadDepartments();
             LoadEmployees();
         }
 
@@ -33,6 +34,7 @@ namespace AssetTrackingSystem
             listViewEmployees.Columns.Add("First Name", 100);
             listViewEmployees.Columns.Add("Last Name", 100);
             listViewEmployees.Columns.Add("Email", 150);
+            listViewEmployees.Columns.Add("Department", 120);
         }
         // loads the listview of employees when form is open
         private void LoadEmployees()
@@ -41,7 +43,7 @@ namespace AssetTrackingSystem
 
             try
             {
-                string sql = "SELECT EmployeeID, FirstName, LastName, Email FROM employees";
+                string sql = "SELECT EmployeeID, FirstName, LastName, Email, Department FROM employees";
                 DataTable dt = db.ExecuteSelect(sql);
 
                 foreach (DataRow row in dt.Rows)
@@ -50,6 +52,7 @@ namespace AssetTrackingSystem
                     item.SubItems.Add(row["FirstName"].ToString());
                     item.SubItems.Add(row["LastName"].ToString());
                     item.SubItems.Add(row["Email"].ToString());
+                    item.SubItems.Add(row["Department"].ToString());
                     listViewEmployees.Items.Add(item);
                 }
 
@@ -63,6 +66,21 @@ namespace AssetTrackingSystem
             }
         }
 
+        private void LoadDepartments()
+        {
+            cmbDepartment.Items.Clear();
+
+            cmbDepartment.Items.AddRange(new string[]
+            {
+                "IT",
+                "Finance",
+                "Human Resources",
+                "Operations",
+                "Sales"
+            });
+
+            cmbDepartment.SelectedIndex = 0; // Default to IT
+        }
 
         // click event for adding new employee to database
         private void btnAddEmployee_Click(object sender, EventArgs e)
@@ -79,7 +97,8 @@ namespace AssetTrackingSystem
                 {
                     FirstName = txtFirstName.Text,
                     LastName = txtLastName.Text,
-                    Email = txtEmail.Text
+                    Email = txtEmail.Text,
+                    Department = cmbDepartment.SelectedItem.ToString()
                 };
 
                 db.AddEmployee(newEmp, txtPassword.Text);
