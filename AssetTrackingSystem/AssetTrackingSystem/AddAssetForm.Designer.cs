@@ -116,7 +116,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 15F);
-            label7.Location = new Point(319, 330);
+            label7.Location = new Point(319, 291);
             label7.Name = "label7";
             label7.Size = new Size(68, 28);
             label7.TabIndex = 6;
@@ -161,7 +161,7 @@
             // 
             // txtNote
             // 
-            txtNote.Location = new Point(393, 335);
+            txtNote.Location = new Point(393, 299);
             txtNote.Multiline = true;
             txtNote.Name = "txtNote";
             txtNote.Size = new Size(200, 37);
@@ -214,7 +214,7 @@
             // 
             lblAssignedEmployee.AutoSize = true;
             lblAssignedEmployee.Font = new Font("Segoe UI", 15F);
-            lblAssignedEmployee.Location = new Point(201, 290);
+            lblAssignedEmployee.Location = new Point(201, 335);
             lblAssignedEmployee.Name = "lblAssignedEmployee";
             lblAssignedEmployee.Size = new Size(186, 28);
             lblAssignedEmployee.TabIndex = 17;
@@ -224,7 +224,7 @@
             // 
             cmbEmployee.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEmployee.FormattingEnabled = true;
-            cmbEmployee.Location = new Point(393, 298);
+            cmbEmployee.Location = new Point(393, 343);
             cmbEmployee.Name = "cmbEmployee";
             cmbEmployee.Size = new Size(200, 23);
             cmbEmployee.TabIndex = 18;

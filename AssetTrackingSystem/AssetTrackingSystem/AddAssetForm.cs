@@ -11,6 +11,12 @@ namespace AssetTrackingSystem
         }
         private void AddAssetForm_Load(object sender, EventArgs e)
         {
+            if (!Session.IsAdmin)
+            {
+                cmbEmployee.Visible = false;
+                lblAssignedEmployee.Visible = false;
+            }
+
             LoadEmployees();
         }
         private void LoadEmployees()
