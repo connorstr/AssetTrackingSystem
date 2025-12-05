@@ -76,5 +76,17 @@ namespace AssetTrackingSystem
             }
 
         }
+        public static SoftwareAsset GetSoftwareAsset()
+        {
+            return new SoftwareAsset
+            {
+                OSName = RuntimeInformation.OSDescription,
+                OSVersion = Environment.OSVersion.Version.ToString(),
+                OSManufacturer = "Microsoft",
+                DetectedDate = DateTime.Now,
+                Note = "Auto-detected OS",
+                EmployeeID = Session.CurrentUser?.EmployeeID
+            };
+        }
     }
 }

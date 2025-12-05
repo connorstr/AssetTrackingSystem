@@ -23,8 +23,8 @@ namespace AssetTrackingSystem
 
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text;
-
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrEmpty(password))
+            // basic validation
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
                 lblError.Text = "Enter email and password.";
                 return;
@@ -33,6 +33,7 @@ namespace AssetTrackingSystem
             try
             {
                 DatabaseManager db = new DatabaseManager();
+                // authenticate user
                 var loggedUser = db.Authenticate(email, password);
 
                 if (loggedUser == null)
@@ -41,8 +42,13 @@ namespace AssetTrackingSystem
                     return;
                 }
 
+                // stores logged in user
                 Session.CurrentUser = loggedUser;
 
+                // does silent scan and linking of assets
+                AutoScanAndLinkAssets(db);
+
+                // continues to main app
                 this.Hide();
                 var main = new AddAssetForm();
                 main.ShowDialog();
@@ -51,6 +57,35 @@ namespace AssetTrackingSystem
             catch (Exception ex)
             {
                 MessageBox.Show("Login error: " + ex.Message);
+            }
+        }
+
+        private void AutoScanAndLinkAssets(DatabaseManager db)
+        {
+            try
+            {
+                var hw = SystemInfoHelper.GetHardwareInfo();
+
+                if (!db.HardwareExists(hw.SystemName))
+                {
+                    db.AddHardwareAsset(hw, Session.CurrentUser.EmployeeID);
+                }
+
+                // Get the hardware ID
+                var hwId = db.GetHardwareIdByName(hw.SystemName);
+
+                if (!hwId.HasValue)
+                    return;
+
+                var sw = SystemInfoHelper.GetSoftwareAsset();
+
+                int softwareId = db.AddSoftwareAsset(sw);
+
+                db.LinkSoftwareToHardware(hwId.Value, softwareId);
+            }
+            catch
+            {
+                // silently ignore failures login must always go thru
             }
         }
     }

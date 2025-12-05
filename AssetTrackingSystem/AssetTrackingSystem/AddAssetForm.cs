@@ -63,7 +63,7 @@ namespace AssetTrackingSystem
                     PurchaseDate = dtpPurchaseDate.Value,
                     Note = txtNote.Text,
                     IPAddress = txtIPAddress.Text,
-                    EmployeeID = Session.IsAdmin && cmbEmployee.SelectedValue != null 
+                    EmployeeID = Session.IsAdmin && cmbEmployee.SelectedValue != null
                             ? (int)cmbEmployee.SelectedValue
                             : Session.CurrentUser.EmployeeID
                 };

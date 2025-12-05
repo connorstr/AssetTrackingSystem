@@ -38,6 +38,20 @@ namespace AssetTrackingSystem
             return count > 0;
         }
 
+        public int? GetHardwareIdByName(string systemName)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = "SELECT AssetID FROM assets WHERE Name = @Name AND Type = 'Hardware' LIMIT 1";
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Name", systemName);
+
+            var result = cmd.ExecuteScalar();
+            if (result == null || result == DBNull.Value) return null;
+            return Convert.ToInt32(result);
+        }
+
         public void AddHardwareAsset(HardwareInfo hw, int? employeeId = null)
         {
             using var conn = GetConnection();
@@ -67,7 +81,9 @@ namespace AssetTrackingSystem
             conn.Open();
 
             // SQL command to insert correct values into table
-            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note, EmployeeID, IPAddress) VALUES (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note, @EmployeeID, @IPAddress)";
+            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note, EmployeeID, IPAddress, OSName, OSVersion, OSManufacturer) 
+                                              VALUES 
+                                              (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note, @EmployeeID, @IPAddress, @OSName, @OSVersion, @OSManufacturer)";
 
             using MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@Name", asset.Name);
@@ -78,6 +94,11 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@Note", asset.Note);
             cmd.Parameters.AddWithValue("@EmployeeID", asset.EmployeeID ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@IPAddress", asset.IPAddress);
+
+            cmd.Parameters.AddWithValue("@OSName", asset.OSName ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@OSVersion", asset.OSVersion ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@OSManufacturer", asset.OSManufacturer ?? (object)DBNull.Value);
+
             cmd.ExecuteNonQuery();
         }
 
@@ -219,5 +240,64 @@ namespace AssetTrackingSystem
                 PasswordHash = storedHash
             };
         }
+
+        public int AddSoftwareAsset(SoftwareAsset sw)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"INSERT INTO software_assets
+            (OSName, OSVersion, OSManufacturer, DetectedDate, Note, EmployeeID)
+            VALUES 
+            (@OSName, @OSVersion, @OSManufacturer, @DetectedDate, @Note, @EmployeeID);
+            SELECT LAST_INSERT_ID();";
+
+            using var cmd = new MySqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@OSName", sw.OSName);
+            cmd.Parameters.AddWithValue("@OSVersion", sw.OSVersion);
+            cmd.Parameters.AddWithValue("@OSManufacturer", sw.OSManufacturer);
+            cmd.Parameters.AddWithValue("@DetectedDate", sw.DetectedDate);
+            cmd.Parameters.AddWithValue("@Note", sw.Note);
+            cmd.Parameters.AddWithValue("@EmployeeID", sw.EmployeeID ?? (object)DBNull.Value);
+
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+
+        public void LinkSoftwareToHardware(int hardwareId, int softwareId)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"INSERT INTO hardware_software_links
+                   (HardwareID, SoftwareID, LinkedDate)
+                   VALUES
+                   (@HardwareID, @SoftwareID, @LinkedDate)";
+
+            using var cmd = new MySqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@HardwareID", hardwareId);
+            cmd.Parameters.AddWithValue("@SoftwareID", softwareId);
+            cmd.Parameters.AddWithValue("@LinkedDate", DateTime.Now);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public bool SoftwareExists(string osName, string osVersion)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"SELECT COUNT(*) FROM software_assets
+                   WHERE OSName = @OSName AND OSVersion = @OSVersion";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@OSName", osName);
+            cmd.Parameters.AddWithValue("@OSVersion", osVersion);
+
+            long count = (long)cmd.ExecuteScalar();
+            return count > 0;
+        }
+
     }
 }

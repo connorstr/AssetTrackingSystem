@@ -86,7 +86,6 @@ namespace AssetTrackingSystem
                 MessageBox.Show("Error loading assets: " + ex.Message);
             }
         }
-
         private void FillList(DataTable dt)
         {
             listViewAssets.Items.Clear();
@@ -94,12 +93,27 @@ namespace AssetTrackingSystem
             foreach (DataRow row in dt.Rows)
             {
                 var item = new ListViewItem(row["AssetID"].ToString());
-                item.SubItems.Add(row["Name"].ToString());
-                item.SubItems.Add(row["Model"].ToString());
-                item.SubItems.Add(row["Manufacturer"].ToString());
-                item.SubItems.Add(row["Type"].ToString());
-                item.SubItems.Add(Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString());
-                item.SubItems.Add(row["Note"].ToString());
+                item.SubItems.Add(row["Name"]?.ToString() ?? "");
+                item.SubItems.Add(row["Model"]?.ToString() ?? "");
+                item.SubItems.Add(row["Manufacturer"]?.ToString() ?? "");
+                item.SubItems.Add(row["Type"]?.ToString() ?? "");
+                // IPAddress column
+                item.SubItems.Add(row.Table.Columns.Contains("IPAddress") ? row["IPAddress"]?.ToString() ?? "" : "");
+                // Purchase date
+                item.SubItems.Add(row.Table.Columns.Contains("PurchaseDate") && row["PurchaseDate"] != DBNull.Value
+                    ? Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString()
+                    : "");
+                // Note
+                item.SubItems.Add(row.Table.Columns.Contains("Note") ? row["Note"]?.ToString() ?? "" : "");
+                // OS details (combine if present)
+                if (row.Table.Columns.Contains("OSName") || row.Table.Columns.Contains("OSVersion"))
+                {
+                    var osName = row.Table.Columns.Contains("OSName") ? row["OSName"]?.ToString() ?? "" : "";
+                    var osVersion = row.Table.Columns.Contains("OSVersion") ? row["OSVersion"]?.ToString() ?? "" : "";
+                    // optionally add another subitem if you made an OS column
+                    // item.SubItems.Add($"{osName} {osVersion}".Trim());
+                }
+
                 listViewAssets.Items.Add(item);
             }
 

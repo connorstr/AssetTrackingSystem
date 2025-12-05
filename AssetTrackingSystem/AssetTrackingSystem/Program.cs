@@ -22,26 +22,7 @@ namespace AssetTrackingSystem
                 MessageBox.Show("Connection failed: " + ex.Message);
                 return;
             }
-
-
-            // auto detects current machine and trys to add it to database
-            try
-            {
-                DatabaseManager db = new();
-                var hw = SystemInfoHelper.GetHardwareInfo();
-
-                if (!db.HardwareExists(hw.SystemName))
-                {
-                    db.AddHardwareAsset(hw, null);
-                    MessageBox.Show("This device has been automatically added to the asset database.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Auto-add failed: " + ex.Message);
-            }
        
-
             string hash = BCrypt.Net.BCrypt.HashPassword("Test123!");
 
             // Application.Run(new EmployeeManagementForm());
