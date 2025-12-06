@@ -19,11 +19,6 @@ namespace AssetTrackingSystem
         public int? EmployeeID { get; set; }
         public string IPAddress { get; set; }
 
-        public string OSName { get; set; }
-        public string OSVersion { get; set; }
-        public string OSManufacturer { get; set; }
-
-
         public Asset() { } // default constructer
     }
 }

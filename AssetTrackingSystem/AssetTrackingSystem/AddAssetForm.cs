@@ -102,5 +102,10 @@ namespace AssetTrackingSystem
         {
             new SoftwareManagementForm().ShowDialog();
         }
+
+        private void btnViewLinks_Click(object sender, EventArgs e)
+        {
+            new LinkedAssetsForm().ShowDialog();
+        }
     }
 }

@@ -50,6 +50,7 @@
             txtIPAddress = new TextBox();
             label8 = new Label();
             btnSoftware = new Button();
+            btnViewLinks = new Button();
             SuspendLayout();
             // 
             // label1
@@ -249,19 +250,30 @@
             // 
             // btnSoftware
             // 
-            btnSoftware.Location = new Point(700, 393);
+            btnSoftware.Location = new Point(12, 77);
             btnSoftware.Name = "btnSoftware";
-            btnSoftware.Size = new Size(77, 32);
+            btnSoftware.Size = new Size(157, 37);
             btnSoftware.TabIndex = 21;
-            btnSoftware.Text = "Software";
+            btnSoftware.Text = "Software Assets";
             btnSoftware.UseVisualStyleBackColor = true;
             btnSoftware.Click += btnSoftware_Click;
+            // 
+            // btnViewLinks
+            // 
+            btnViewLinks.Location = new Point(12, 140);
+            btnViewLinks.Name = "btnViewLinks";
+            btnViewLinks.Size = new Size(157, 37);
+            btnViewLinks.TabIndex = 22;
+            btnViewLinks.Text = "Asset Links";
+            btnViewLinks.UseVisualStyleBackColor = true;
+            btnViewLinks.Click += btnViewLinks_Click;
             // 
             // AddAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnViewLinks);
             Controls.Add(btnSoftware);
             Controls.Add(label8);
             Controls.Add(txtIPAddress);
@@ -314,5 +326,6 @@
         private TextBox txtIPAddress;
         private Label label8;
         private Button btnSoftware;
+        private Button btnViewLinks;
     }
 }

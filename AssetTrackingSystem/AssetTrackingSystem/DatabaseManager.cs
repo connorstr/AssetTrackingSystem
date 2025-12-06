@@ -81,11 +81,12 @@ namespace AssetTrackingSystem
             conn.Open();
 
             // SQL command to insert correct values into table
-            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note, EmployeeID, IPAddress, OSName, OSVersion, OSManufacturer) 
-                                              VALUES 
-                                              (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note, @EmployeeID, @IPAddress, @OSName, @OSVersion, @OSManufacturer)";
+            string sql = @"INSERT INTO assets (Name, Model, Manufacturer, Type, PurchaseDate, Note, EmployeeID, IPAddress)
+                         VALUES 
+                         (@Name, @Model, @Manufacturer, @Type, @PurchaseDate, @Note, @EmployeeID, @IPAddress)";
 
-            using MySqlCommand cmd = new MySqlCommand(sql, conn);
+            using var cmd = new MySqlCommand(sql, conn);
+
             cmd.Parameters.AddWithValue("@Name", asset.Name);
             cmd.Parameters.AddWithValue("@Model", asset.Model);
             cmd.Parameters.AddWithValue("@Manufacturer", asset.Manufacturer);
@@ -94,10 +95,6 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@Note", asset.Note);
             cmd.Parameters.AddWithValue("@EmployeeID", asset.EmployeeID ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@IPAddress", asset.IPAddress);
-
-            cmd.Parameters.AddWithValue("@OSName", asset.OSName ?? (object)DBNull.Value);
-            cmd.Parameters.AddWithValue("@OSVersion", asset.OSVersion ?? (object)DBNull.Value);
-            cmd.Parameters.AddWithValue("@OSManufacturer", asset.OSManufacturer ?? (object)DBNull.Value);
 
             cmd.ExecuteNonQuery();
         }
@@ -335,7 +332,6 @@ namespace AssetTrackingSystem
             return list;
         }
 
-
         public DataTable GetSoftwareForEmployee(int employeeId)
         {
             using var conn = GetConnection();
@@ -368,5 +364,46 @@ namespace AssetTrackingSystem
             return dt;
         }
 
+        public List<LinkedAssetView> GetLinkedAssets(bool admin, int employeeId)
+        {
+            var list = new List<LinkedAssetView>();
+
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"
+                SELECT 
+                    a.Name AS HardwareName,
+                    a.Model,
+                    a.Manufacturer,
+                    s.OSName,
+                    s.OSVersion
+                FROM hardware_software_links l
+                JOIN assets a ON l.HardwareID = a.AssetID
+                JOIN software_assets s ON l.SoftwareID = s.SoftwareID";
+
+            if (!admin)
+                sql += " WHERE a.EmployeeID = @emp";
+
+            using var cmd = new MySqlCommand(sql, conn);
+
+            if (!admin)
+                cmd.Parameters.AddWithValue("@emp", employeeId);
+
+            using var rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(new LinkedAssetView
+                {
+                    HardwareName = rdr.GetString("HardwareName"),
+                    Model = rdr.GetString("Model"),
+                    Manufacturer = rdr.GetString("Manufacturer"),
+                    OSName = rdr.GetString("OSName"),
+                    OSVersion = rdr.GetString("OSVersion")
+                });
+            }
+            return list;
+        }
     }
 }
