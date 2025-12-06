@@ -189,6 +189,7 @@
             btnClear.TabIndex = 14;
             btnClear.Text = "Clear Form";
             btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // btnViewAssets
             // 

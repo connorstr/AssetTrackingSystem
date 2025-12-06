@@ -107,5 +107,27 @@ namespace AssetTrackingSystem
         {
             new LinkedAssetsForm().ShowDialog();
         }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtName.Clear();
+            txtModel.Clear();
+            txtManufacturer.Clear();
+            txtType.Text = "";
+            txtNote.Clear();
+            txtIPAddress.Clear();
+
+            // Reset date picker to today
+            dtpPurchaseDate.Value = DateTime.Today;
+
+            // Reset employee dropdown (Admin only)
+            if (Session.IsAdmin && cmbEmployee.Visible)
+            {
+                cmbEmployee.SelectedIndex = -1;
+            }
+
+            // Put cursor back into first field for faster input
+            txtName.Focus();
+        }
     }
 }
