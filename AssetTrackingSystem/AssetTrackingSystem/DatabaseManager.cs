@@ -299,5 +299,74 @@ namespace AssetTrackingSystem
             return count > 0;
         }
 
+        public List<SoftwareAsset> GetAllSoftware()
+        {
+            var list = new List<SoftwareAsset>();
+
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"
+                SELECT 
+                    SoftwareID,
+                    OSName,
+                    OSVersion,
+                    OSManufacturer,
+                    DetectedDate,
+                    EmployeeID
+                FROM software_assets";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            var rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(new SoftwareAsset
+                {
+                    SoftwareID = rdr.GetInt32("SoftwareID"),
+                    OSName = rdr.GetString("OSName"),
+                    OSVersion = rdr.GetString("OSVersion"),
+                    OSManufacturer = rdr.GetString("OSManufacturer"),
+                    DetectedDate = rdr.GetDateTime("DetectedDate"),
+                    EmployeeID = rdr.IsDBNull("EmployeeID") ? null : rdr.GetInt32("EmployeeID")
+                });
+            }
+
+            return list;
+        }
+
+
+        public DataTable GetSoftwareForEmployee(int employeeId)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"
+                 SELECT 
+                    sa.SoftwareID,
+                    sa.OSName,
+                    sa.OSVersion,
+                    sa.OSManufacturer,
+                    h.Name AS HardwareName,
+                    l.LinkedDate
+                FROM software_assets sa
+                INNER JOIN hardware_software_links l 
+                    ON sa.SoftwareID = l.SoftwareID
+                INNER JOIN assets h 
+                    ON l.HardwareID = h.AssetID
+                WHERE h.EmployeeID = @EmployeeID
+                ORDER BY sa.OSName;";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeId);
+
+            using var da = new MySqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            return dt;
+        }
+
     }
 }

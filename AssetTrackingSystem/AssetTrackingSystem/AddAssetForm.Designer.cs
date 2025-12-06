@@ -49,6 +49,7 @@
             cmbEmployee = new ComboBox();
             txtIPAddress = new TextBox();
             label8 = new Label();
+            btnSoftware = new Button();
             SuspendLayout();
             // 
             // label1
@@ -246,11 +247,22 @@
             label8.TabIndex = 20;
             label8.Text = "IP Address:";
             // 
+            // btnSoftware
+            // 
+            btnSoftware.Location = new Point(700, 393);
+            btnSoftware.Name = "btnSoftware";
+            btnSoftware.Size = new Size(77, 32);
+            btnSoftware.TabIndex = 21;
+            btnSoftware.Text = "Software";
+            btnSoftware.UseVisualStyleBackColor = true;
+            btnSoftware.Click += btnSoftware_Click;
+            // 
             // AddAssetForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnSoftware);
             Controls.Add(label8);
             Controls.Add(txtIPAddress);
             Controls.Add(cmbEmployee);
@@ -301,5 +313,6 @@
         private ComboBox cmbEmployee;
         private TextBox txtIPAddress;
         private Label label8;
+        private Button btnSoftware;
     }
 }

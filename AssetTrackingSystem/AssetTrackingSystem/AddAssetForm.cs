@@ -97,5 +97,10 @@ namespace AssetTrackingSystem
             EmployeeManagementForm employeeForm = new();
             employeeForm.ShowDialog();
         }
+
+        private void btnSoftware_Click(object sender, EventArgs e)
+        {
+            new SoftwareManagementForm().ShowDialog();
+        }
     }
 }
