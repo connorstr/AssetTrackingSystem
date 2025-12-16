@@ -30,6 +30,7 @@
         {
             lblSoftwareAssets = new Label();
             listViewSoftware = new ListView();
+            btnCheckVulnerabilities = new Button();
             SuspendLayout();
             // 
             // lblSoftwareAssets
@@ -54,11 +55,22 @@
             listViewSoftware.UseCompatibleStateImageBehavior = false;
             listViewSoftware.View = View.Details;
             // 
+            // btnCheckVulnerabilities
+            // 
+            btnCheckVulnerabilities.Location = new Point(332, 405);
+            btnCheckVulnerabilities.Name = "btnCheckVulnerabilities";
+            btnCheckVulnerabilities.Size = new Size(155, 33);
+            btnCheckVulnerabilities.TabIndex = 4;
+            btnCheckVulnerabilities.Text = "Check Vulnerabilities";
+            btnCheckVulnerabilities.UseVisualStyleBackColor = true;
+            btnCheckVulnerabilities.Click += btnCheckVulnerabilities_Click;
+            // 
             // SoftwareManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnCheckVulnerabilities);
             Controls.Add(listViewSoftware);
             Controls.Add(lblSoftwareAssets);
             Name = "SoftwareManagementForm";
@@ -70,5 +82,6 @@
 
         private Label lblSoftwareAssets;
         private ListView listViewSoftware;
+        private Button btnCheckVulnerabilities;
     }
 }

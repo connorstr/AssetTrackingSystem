@@ -21,6 +21,11 @@ namespace AssetTrackingSystem
             LoadSoftware();
         }
 
+        private void SoftwareManagementForm_Load(object sender, EventArgs e)
+        {
+            btnCheckVulnerabilities.Visible = Session.IsAdmin;
+        }
+
         private void SetupListView()
         {
             listViewSoftware.View = View.Details;
@@ -52,6 +57,39 @@ namespace AssetTrackingSystem
                 item.SubItems.Add(s.DetectedDate.ToShortDateString());
 
                 listViewSoftware.Items.Add(item);
+            }
+        }
+
+        private async void btnCheckVulnerabilities_Click(object sender, EventArgs e)
+        {
+            if (!Session.IsAdmin)
+                return;
+
+            if (listViewSoftware.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Select software first.");
+                return;
+            }
+
+            var item = listViewSoftware.SelectedItems[0];
+            string osName = item.SubItems[1].Text;
+            string osVersion = item.SubItems[2].Text;
+
+            try
+            {
+                var results = await NvdApiClient.SearchVulnerabilities(osName, osVersion);
+
+                if (results.Count == 0)
+                {
+                    MessageBox.Show("No high or critical vulnerabilities found.");
+                    return;
+                }
+
+                new VulnerabilityResultsForm(results).ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("NVD lookup failed: " + ex.Message);
             }
         }
     }
