@@ -64,9 +64,8 @@
             lblError.AutoSize = true;
             lblError.Location = new Point(328, 260);
             lblError.Name = "lblError";
-            lblError.Size = new Size(38, 15);
+            lblError.Size = new Size(0, 15);
             lblError.TabIndex = 3;
-            lblError.Text = "label1";
             // 
             // LoginForm
             // 
