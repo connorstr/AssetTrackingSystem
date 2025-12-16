@@ -23,6 +23,10 @@ namespace AssetTrackingSystem
                 $"https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={keyword}";
 
             var json = await http.GetStringAsync(url);
+
+            System.Diagnostics.Debug.WriteLine("NVD API RESPONSE:");
+            System.Diagnostics.Debug.WriteLine(json.Substring(0, Math.Min(500, json.Length)));
+
             var root = JObject.Parse(json);
 
             var vulns = root["vulnerabilities"];
@@ -52,7 +56,7 @@ namespace AssetTrackingSystem
                     metrics["cvssData"]?["baseScore"]?.ToObject<double>() ?? 0;
 
                 if (severity != "HIGH" && severity != "CRITICAL")
-                    continue;
+                continue;
 
                 list.Add(new VulnerabilityResult
                 {

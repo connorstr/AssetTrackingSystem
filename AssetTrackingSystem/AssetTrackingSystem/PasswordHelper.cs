@@ -8,6 +8,9 @@ using BCrypt.Net;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// helper used to verify hashed passwords using BCrypt
+    /// </summary>
     public static class PasswordHelper
     {
         public static string HashPassword(string password)

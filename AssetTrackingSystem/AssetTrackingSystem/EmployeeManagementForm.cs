@@ -11,6 +11,11 @@ using System.Windows.Forms;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// form responsible for adding new employees
+    /// assigning their roles dictating what features they can access
+    /// also assigning password, password is not changable by user currently
+    /// </summary>
     public partial class EmployeeManagementForm : Form
     {
         private DatabaseManager db;

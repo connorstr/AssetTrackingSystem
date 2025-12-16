@@ -11,6 +11,10 @@ using System.Windows.Forms;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// form used to display the main assets from database
+    /// has ability to edit and delete each asset displayed
+    /// </summary>
     public partial class ViewAssetsForm : Form
     {
         private DatabaseManager db;
@@ -97,21 +101,16 @@ namespace AssetTrackingSystem
                 item.SubItems.Add(row["Model"]?.ToString() ?? "");
                 item.SubItems.Add(row["Manufacturer"]?.ToString() ?? "");
                 item.SubItems.Add(row["Type"]?.ToString() ?? "");
-                // IPAddress column
                 item.SubItems.Add(row.Table.Columns.Contains("IPAddress") ? row["IPAddress"]?.ToString() ?? "" : "");
-                // Purchase date
+               
                 item.SubItems.Add(row.Table.Columns.Contains("PurchaseDate") && row["PurchaseDate"] != DBNull.Value
                     ? Convert.ToDateTime(row["PurchaseDate"]).ToShortDateString()
-                    : "");
-                // Note
-                item.SubItems.Add(row.Table.Columns.Contains("Note") ? row["Note"]?.ToString() ?? "" : "");
-                // OS details (combine if present)
+                    : "");               
+                item.SubItems.Add(row.Table.Columns.Contains("Note") ? row["Note"]?.ToString() ?? "" : "");                
                 if (row.Table.Columns.Contains("OSName") || row.Table.Columns.Contains("OSVersion"))
                 {
                     var osName = row.Table.Columns.Contains("OSName") ? row["OSName"]?.ToString() ?? "" : "";
-                    var osVersion = row.Table.Columns.Contains("OSVersion") ? row["OSVersion"]?.ToString() ?? "" : "";
-                    // optionally add another subitem if you made an OS column
-                    // item.SubItems.Add($"{osName} {osVersion}".Trim());
+                    var osVersion = row.Table.Columns.Contains("OSVersion") ? row["OSVersion"]?.ToString() ?? "" : "";                   
                 }
 
                 listViewAssets.Items.Add(item);
@@ -120,7 +119,7 @@ namespace AssetTrackingSystem
             foreach (ColumnHeader col in listViewAssets.Columns)
                 col.Width = -2;
         }
-
+        // button used to bring up the edit asset form
         private void btnEditAsset_Click(object sender, EventArgs e)
         {
             if (listViewAssets.SelectedItems.Count == 0)
@@ -177,7 +176,7 @@ namespace AssetTrackingSystem
             }
 
         }
-
+        // used to delete assets permanantly from list and database
         private void btnDeleteAsset_Click(object sender, EventArgs e)
         {
             if (listViewAssets.SelectedItems.Count == 0)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlX.XDevAPI.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,8 +11,13 @@ using System.Windows.Forms;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// form used for displaying list view of software assets from database
+    /// admin users have ability to scan for vulnerabilities against the NVD database
+    /// </summary>
     public partial class SoftwareManagementForm : Form
     {
+        private bool isScanning = false;
         private DatabaseManager db = new DatabaseManager();
 
         public SoftwareManagementForm()
@@ -25,7 +31,7 @@ namespace AssetTrackingSystem
         {
             btnCheckVulnerabilities.Visible = Session.IsAdmin;
         }
-
+        // sets up the list view columns and names
         private void SetupListView()
         {
             listViewSoftware.View = View.Details;
@@ -38,7 +44,7 @@ namespace AssetTrackingSystem
             listViewSoftware.Columns.Add("Manufacturer", 150);
             listViewSoftware.Columns.Add("Detected Date", 120);
         }
-
+        // populates the list view with software details from database
         private void LoadSoftware()
         {
             listViewSoftware.Items.Clear();
@@ -59,11 +65,14 @@ namespace AssetTrackingSystem
                 listViewSoftware.Items.Add(item);
             }
         }
-
+        // button used to scan for vulnerabilities, 
         private async void btnCheckVulnerabilities_Click(object sender, EventArgs e)
         {
             if (!Session.IsAdmin)
+            {
+                MessageBox.Show("Admin access required.");
                 return;
+            }
 
             if (listViewSoftware.SelectedItems.Count == 0)
             {
@@ -77,20 +86,38 @@ namespace AssetTrackingSystem
 
             try
             {
+                btnCheckVulnerabilities.Enabled = false;
+                btnCheckVulnerabilities.Text = "Scanning...";
+
                 var results = await NvdApiClient.SearchVulnerabilities(osName, osVersion);
 
-                if (results.Count == 0)
+                if (results == null || results.Count == 0)
                 {
-                    MessageBox.Show("No high or critical vulnerabilities found.");
+                    MessageBox.Show(
+                        "No HIGH or CRITICAL vulnerabilities were found for this software.",
+                        "Scan Complete",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
                     return;
                 }
 
-                new VulnerabilityResultsForm(results).ShowDialog();
+                using (var form = new VulnerabilityResultsForm(results))
+                {
+                    form.ShowDialog();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("NVD lookup failed: " + ex.Message);
+                MessageBox.Show("NVD lookup failed:\n" + ex.Message);
+            }
+            finally
+            {
+                btnCheckVulnerabilities.Enabled = true;
+                btnCheckVulnerabilities.Text = "Check Vulnerabilities";
             }
         }
+
+
     }
 }

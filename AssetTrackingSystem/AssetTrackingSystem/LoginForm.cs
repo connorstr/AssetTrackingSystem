@@ -11,6 +11,10 @@ using System.Windows.Forms;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// main form used for users to log in and 
+    /// manages the auto detection of hardware upon login
+    /// </summary>
     public partial class LoginForm : Form
     {
         public LoginForm()
@@ -59,7 +63,7 @@ namespace AssetTrackingSystem
                 MessageBox.Show("Login error: " + ex.Message);
             }
         }
-
+        // attempts to auto detect users hardware and software and links said assets
         private void AutoScanAndLinkAssets(DatabaseManager db)
         {
             try

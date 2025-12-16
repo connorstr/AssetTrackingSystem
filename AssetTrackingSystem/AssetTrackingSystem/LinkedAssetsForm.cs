@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// form to simply display what hardware asset a software asset is assigned to
+    /// only displays names of assets for simplicity, IDs are saved in database
+    /// </summary>
     public partial class LinkedAssetsForm : Form
     {
         public LinkedAssetsForm()
@@ -18,7 +22,7 @@ namespace AssetTrackingSystem
             Setup();
             LoadLinks();
         }
-
+        // sets up the list view columns
         void Setup()
         {
             listViewLinks.Columns.Add("Hardware", 150);
@@ -27,7 +31,7 @@ namespace AssetTrackingSystem
             listViewLinks.Columns.Add("OS", 200);
             listViewLinks.Columns.Add("Version", 100);
         }
-
+        // populates the list view with the database fields
         void LoadLinks()
         {
             var db = new DatabaseManager();

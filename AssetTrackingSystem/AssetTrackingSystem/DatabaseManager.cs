@@ -37,7 +37,7 @@ namespace AssetTrackingSystem
             long count = (long)cmd.ExecuteScalar();
             return count > 0;
         }
-
+        // retrieves the assetID for a hardware asset, returns null if no matching records exist
         public int? GetHardwareIdByName(string systemName)
         {
             using var conn = GetConnection();
@@ -51,7 +51,7 @@ namespace AssetTrackingSystem
             if (result == null || result == DBNull.Value) return null;
             return Convert.ToInt32(result);
         }
-
+        // inserts new hardware asset to database
         public void AddHardwareAsset(HardwareInfo hw, int? employeeId = null)
         {
             using var conn = GetConnection();
@@ -129,7 +129,7 @@ namespace AssetTrackingSystem
 
             cmd.ExecuteNonQuery();
         }
-
+        // deletes record from database
         public void DeleteAsset(int assetId)
         {
             using var conn = GetConnection();
@@ -142,7 +142,7 @@ namespace AssetTrackingSystem
             cmd.ExecuteNonQuery();
         }
 
-
+        // adds employee record to database, plain text passwords are never stored and are hashed
         public void AddEmployee(Employee employee, string plainPassword)
         {
             using var conn = GetConnection();
@@ -163,7 +163,7 @@ namespace AssetTrackingSystem
 
             cmd.ExecuteNonQuery();
         }
-
+        // updates employee record from database
         public void UpdateEmployee(Employee employee)
         {
             using var conn = GetConnection();
@@ -182,7 +182,7 @@ namespace AssetTrackingSystem
             cmd.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
             cmd.ExecuteNonQuery();
         }
-
+        // deletes employee record from database
         public void DeleteEmployee(int employeeId)
         {
             using var conn = GetConnection();
@@ -207,7 +207,7 @@ namespace AssetTrackingSystem
             adapter.Fill(dt);
             return dt;
         }
-
+        // authenticates a user by verifying their password hash
         public Employee Authenticate(string email, string password)
         {
             using var conn = GetConnection();
@@ -237,7 +237,7 @@ namespace AssetTrackingSystem
                 PasswordHash = storedHash
             };
         }
-
+        // adds detected software asset and returns generated ID linked to it
         public int AddSoftwareAsset(SoftwareAsset sw)
         {
             using var conn = GetConnection();
@@ -261,6 +261,8 @@ namespace AssetTrackingSystem
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
+
+        // creates a relationship between a hardware asset and a software asset
         public void LinkSoftwareToHardware(int hardwareId, int softwareId)
         {
             using var conn = GetConnection();
@@ -279,7 +281,7 @@ namespace AssetTrackingSystem
 
             cmd.ExecuteNonQuery();
         }
-
+        // method to check if a piece of software exists before adding another
         public bool SoftwareExists(string osName, string osVersion)
         {
             using var conn = GetConnection();

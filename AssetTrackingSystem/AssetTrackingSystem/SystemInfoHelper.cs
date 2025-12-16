@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// helper used for the autodetection of system information
+    /// keeps it in its own file to keep main code clean
+    /// </summary>
     internal class SystemInfoHelper
     {
         public static HardwareInfo GetHardwareInfo()

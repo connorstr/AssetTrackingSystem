@@ -2,6 +2,11 @@ using MySql.Data.MySqlClient;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// Form is responsible for adding new assets into the system
+    /// handles user input, access control for different user types and 
+    /// database insertion.
+    /// </summary>
     public partial class AddAssetForm : Form
     {
         public AddAssetForm()
@@ -9,16 +14,20 @@ namespace AssetTrackingSystem
             InitializeComponent();
             this.Load += AddAssetForm_Load;
         }
+        // runs when the form loads and applies access restrictions based on user type
         private void AddAssetForm_Load(object sender, EventArgs e)
         {
+            // non admin users arent allowed to assign assets to other users
             if (!Session.IsAdmin)
             {
                 cmbEmployee.Visible = false;
                 lblAssignedEmployee.Visible = false;
             }
 
+            // load employess for admin view
             LoadEmployees();
         }
+        // loads employee data from database 
         private void LoadEmployees()
         {
             try
@@ -63,6 +72,8 @@ namespace AssetTrackingSystem
                     PurchaseDate = dtpPurchaseDate.Value,
                     Note = txtNote.Text,
                     IPAddress = txtIPAddress.Text,
+                    
+                    // admins can assign assets to other employees, non admins have assets auto assigned to them
                     EmployeeID = Session.IsAdmin && cmbEmployee.SelectedValue != null
                             ? (int)cmbEmployee.SelectedValue
                             : Session.CurrentUser.EmployeeID
@@ -97,17 +108,17 @@ namespace AssetTrackingSystem
             EmployeeManagementForm employeeForm = new();
             employeeForm.ShowDialog();
         }
-
+        // opens software management form
         private void btnSoftware_Click(object sender, EventArgs e)
         {
             new SoftwareManagementForm().ShowDialog();
         }
-
+        // opens loinked hardware/software view
         private void btnViewLinks_Click(object sender, EventArgs e)
         {
             new LinkedAssetsForm().ShowDialog();
         }
-
+        // clears all inputs in forms
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtName.Clear();

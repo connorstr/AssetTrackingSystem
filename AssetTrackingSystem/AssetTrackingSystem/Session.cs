@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace AssetTrackingSystem
 {
+    /// <summary>
+    /// handles the user sessions, 
+    /// checks if user is IT or not to determin feature access
+    /// </summary>
     public static class Session
     {
         public static Employee CurrentUser { get; set; }
