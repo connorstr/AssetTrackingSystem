@@ -32,6 +32,9 @@
             txtPassword = new TextBox();
             btnLogin = new Button();
             lblError = new Label();
+            label1 = new Label();
+            label2 = new Label();
+            lblLinkedAssets = new Label();
             SuspendLayout();
             // 
             // txtEmail
@@ -67,11 +70,45 @@
             lblError.Size = new Size(0, 15);
             lblError.TabIndex = 3;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(236, 106);
+            label1.Name = "label1";
+            label1.Size = new Size(51, 21);
+            label1.TabIndex = 4;
+            label1.Text = "Email:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(208, 151);
+            label2.Name = "label2";
+            label2.Size = new Size(79, 21);
+            label2.TabIndex = 5;
+            label2.Text = "Password:";
+            // 
+            // lblLinkedAssets
+            // 
+            lblLinkedAssets.Dock = DockStyle.Top;
+            lblLinkedAssets.Font = new Font("Segoe UI", 24.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblLinkedAssets.Location = new Point(0, 0);
+            lblLinkedAssets.Name = "lblLinkedAssets";
+            lblLinkedAssets.Size = new Size(800, 45);
+            lblLinkedAssets.TabIndex = 6;
+            lblLinkedAssets.Text = "Log In";
+            lblLinkedAssets.TextAlign = ContentAlignment.TopCenter;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblLinkedAssets);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(lblError);
             Controls.Add(btnLogin);
             Controls.Add(txtPassword);
@@ -88,5 +125,8 @@
         private TextBox txtPassword;
         private Button btnLogin;
         private Label lblError;
+        private Label label1;
+        private Label label2;
+        private Label lblLinkedAssets;
     }
 }
