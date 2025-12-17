@@ -172,7 +172,7 @@
             lblEditAsset.Name = "lblEditAsset";
             lblEditAsset.Size = new Size(800, 59);
             lblEditAsset.TabIndex = 26;
-            lblEditAsset.Text = "EditAsset";
+            lblEditAsset.Text = "Edit Asset";
             lblEditAsset.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // cmbEmployee

@@ -31,6 +31,8 @@
             lblSoftwareAssets = new Label();
             listViewSoftware = new ListView();
             btnCheckVulnerabilities = new Button();
+            btnEditSoftware = new Button();
+            btnDeleteSoftware = new Button();
             SuspendLayout();
             // 
             // lblSoftwareAssets
@@ -57,7 +59,7 @@
             // 
             // btnCheckVulnerabilities
             // 
-            btnCheckVulnerabilities.Location = new Point(332, 405);
+            btnCheckVulnerabilities.Location = new Point(597, 405);
             btnCheckVulnerabilities.Name = "btnCheckVulnerabilities";
             btnCheckVulnerabilities.Size = new Size(155, 33);
             btnCheckVulnerabilities.TabIndex = 4;
@@ -65,11 +67,33 @@
             btnCheckVulnerabilities.UseVisualStyleBackColor = true;
             btnCheckVulnerabilities.Click += btnCheckVulnerabilities_Click;
             // 
+            // btnEditSoftware
+            // 
+            btnEditSoftware.Location = new Point(102, 415);
+            btnEditSoftware.Name = "btnEditSoftware";
+            btnEditSoftware.Size = new Size(75, 23);
+            btnEditSoftware.TabIndex = 5;
+            btnEditSoftware.Text = "Edit";
+            btnEditSoftware.UseVisualStyleBackColor = true;
+            btnEditSoftware.Click += btnEditSoftware_Click;
+            // 
+            // btnDeleteSoftware
+            // 
+            btnDeleteSoftware.Location = new Point(241, 416);
+            btnDeleteSoftware.Name = "btnDeleteSoftware";
+            btnDeleteSoftware.Size = new Size(75, 23);
+            btnDeleteSoftware.TabIndex = 6;
+            btnDeleteSoftware.Text = "Delete";
+            btnDeleteSoftware.UseVisualStyleBackColor = true;
+            btnDeleteSoftware.Click += btnDeleteSoftware_Click;
+            // 
             // SoftwareManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnDeleteSoftware);
+            Controls.Add(btnEditSoftware);
             Controls.Add(btnCheckVulnerabilities);
             Controls.Add(listViewSoftware);
             Controls.Add(lblSoftwareAssets);
@@ -83,5 +107,7 @@
         private Label lblSoftwareAssets;
         private ListView listViewSoftware;
         private Button btnCheckVulnerabilities;
+        private Button btnEditSoftware;
+        private Button btnDeleteSoftware;
     }
 }

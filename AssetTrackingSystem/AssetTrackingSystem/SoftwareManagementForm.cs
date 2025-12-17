@@ -117,7 +117,59 @@ namespace AssetTrackingSystem
                 btnCheckVulnerabilities.Text = "Check Vulnerabilities";
             }
         }
+        // button used to bring up the edit software form
+        private void btnEditSoftware_Click(object sender, EventArgs e)
+        {
+            if (listViewSoftware.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Select software to edit.");
+                return;
+            }
 
+            var item = listViewSoftware.SelectedItems[0];
+            int softwareId = int.Parse(item.SubItems[0].Text);
+
+            var sw = db.GetAllSoftware().FirstOrDefault(s => s.SoftwareID == softwareId);
+            if (sw == null) return;
+
+            EditSoftwareForm editForm = new EditSoftwareForm(sw);
+            if (editForm.ShowDialog() == DialogResult.OK)
+            {
+                LoadSoftware(); // refresh the list
+            }
+        }
+        // button for deleting software entities from database
+        private void btnDeleteSoftware_Click(object sender, EventArgs e)
+        {
+            if (listViewSoftware.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Select software to delete.");
+                return;
+            }
+
+            int softwareId = int.Parse(listViewSoftware.SelectedItems[0].SubItems[0].Text);
+
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this software? Any linked hardware associations will also be removed.",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    db.DeleteSoftware(softwareId);
+                    MessageBox.Show("Software deleted successfully!");
+                    LoadSoftware(); // Refresh list
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting software: " + ex.Message);
+                }
+            }
+        }
 
     }
 }

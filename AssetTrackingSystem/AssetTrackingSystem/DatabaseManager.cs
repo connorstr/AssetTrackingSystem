@@ -261,6 +261,52 @@ namespace AssetTrackingSystem
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
+        // Update existing software record
+        public void UpdateSoftware(SoftwareAsset sw)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            string sql = @"UPDATE software_assets
+                   SET OSName = @OSName,
+                       OSVersion = @OSVersion,
+                       OSManufacturer = @OSManufacturer,
+                       DetectedDate = @DetectedDate,
+                       Note = @Note,
+                       EmployeeID = @EmployeeID
+                   WHERE SoftwareID = @SoftwareID";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@OSName", sw.OSName);
+            cmd.Parameters.AddWithValue("@OSVersion", sw.OSVersion);
+            cmd.Parameters.AddWithValue("@OSManufacturer", sw.OSManufacturer);
+            cmd.Parameters.AddWithValue("@DetectedDate", sw.DetectedDate);
+            cmd.Parameters.AddWithValue("@Note", sw.Note);
+            cmd.Parameters.AddWithValue("@EmployeeID", sw.EmployeeID ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@SoftwareID", sw.SoftwareID);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        // Delete a software record
+        public void DeleteSoftware(int softwareId)
+        {
+            using var conn = GetConnection();
+            conn.Open();
+
+            // Step 1: Delete any links pointing to this software
+            string deleteLinksSql = "DELETE FROM hardware_software_links WHERE SoftwareID = @SoftwareID";
+            using var cmdLinks = new MySqlCommand(deleteLinksSql, conn);
+            cmdLinks.Parameters.AddWithValue("@SoftwareID", softwareId);
+            cmdLinks.ExecuteNonQuery();
+
+            // Step 2: Delete the software asset itself
+            string deleteSoftwareSql = "DELETE FROM software_assets WHERE SoftwareID = @SoftwareID";
+            using var cmdSoftware = new MySqlCommand(deleteSoftwareSql, conn);
+            cmdSoftware.Parameters.AddWithValue("@SoftwareID", softwareId);
+            cmdSoftware.ExecuteNonQuery();
+        }
+
 
         // creates a relationship between a hardware asset and a software asset
         public void LinkSoftwareToHardware(int hardwareId, int softwareId)
